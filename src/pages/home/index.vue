@@ -5,7 +5,7 @@
       <el-card class="box-card">
         <div slot="header" class="clearfix">
           <i class="fa fa-bell-o fa-lg" aria-hidden="true" ></i>
-          <span>公告</span>
+          <span>最新消息</span>
           <el-button style="float: right;" @click.stop="on_refreshtips" size="small">
             <i class="fa fa-refresh"></i>
           </el-button>
@@ -48,7 +48,7 @@
       <el-card class="box-card" style="margin:40px 3% 0 0;width: 35%;float: left">
         <div slot="header" class="clearfix">
           <i class="fa fa-newspaper-o fa-lg" aria-hidden="true" ></i>
-          <span>新闻</span>
+          <span>最新文件下载</span>
           <el-button style="float: right;" @click.stop="on_refreshnews" size="small">
             <i class="fa fa-refresh"></i>
           </el-button>
