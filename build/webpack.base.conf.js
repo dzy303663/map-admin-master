@@ -36,7 +36,8 @@ module.exports = {
       'store': resolve('src/store'),
       'pages': resolve('src/pages'),
       'plugins': resolve('src/plugins'),
-      'components': resolve('src/components')
+      'components': resolve('src/components'),
+      '@': resolve('src'),
     }
   },
   module: {
