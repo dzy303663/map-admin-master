@@ -101,7 +101,7 @@ export default {
         //登录提交
         cookieStorage.set("checked", this.checked);
         axios
-          .post('/api/login', {
+          .post("/api/login", {
             params: {
               method: "login",
               username: this.form.username,
@@ -110,6 +110,14 @@ export default {
           })
           .then(res => {
             // console.log(res)
+            if (res.data.code != 200) {
+              this.load_data = false;
+              this.$notify.info({
+                title: "温馨提示",
+                message: res.data.msg
+              });
+              return;
+            }
             if (this.checked) {
               cookieStorage.set("username", this.form.username);
               cookieStorage.set("password", this.form.password);
@@ -120,51 +128,12 @@ export default {
             this.set_user_info({
               user: res.data.data,
               login: true,
-              dept_id: res.data.dept_id,
-              organ_id: res.data.organ_id
             });
             this.$message.success("登录成功");
             setTimeout(this.$router.push({ path: "/" }), 500);
           })
           .catch(err => {
-            var message = "";
-            if (err.response.status === 404) {
-              message = "用户名错误！";
-            } else if (err.response.status === 403) {
-              message = "密码不正确！";
-            }
-            this.load_data = false;
-            this.$notify.info({
-              title: "温馨提示",
-              message: message
-              // message: '测试账号为Yang,密码为：admin'
-            });
           });
-        // this.$fetch.api_user.login(this.form)
-        //   .then(({data}) => {
-        //     if(this.checked){
-        //       cookieStorage.set('username', this.form.username)
-        //       cookieStorage.set('password', this.form.password)
-        //     }else{
-        //       cookieStorage.remove("username")
-        //       cookieStorage.remove("password")
-        //     }
-        //     this.set_user_info({
-        //       user: data,
-        //       login: true
-        //     })
-        //     this.$message.success("登录成功")
-        //     setTimeout(this.$router.push({path: '/'}), 500)
-        //   })
-        //   .catch(({code}) => {
-        //     this.load_data = false
-        //     if (code === port_code.error) {
-        //       this.$notify.info({
-        //         title: '温馨提示',
-        //         message: '测试账号为Yang,密码为：admin'
-        //       })
-        //     }
-        //   })
       });
     },
     getinit() {
@@ -189,7 +158,7 @@ export default {
     font-weight: 700;
     letter-spacing: 10px;
     width: 66%;
-    &.first{
+    &.first {
       margin-top: 100px;
       font-size: 52px;
     }
