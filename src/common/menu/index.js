@@ -36,7 +36,7 @@ export default {
           path: "/monitor/tips"
         }]
       },{
-        title: "请假申请",
+        title: "请假申请1",
         path: "/map",
         icon: "fa-map",
         child: [{
