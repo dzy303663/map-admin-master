@@ -125,6 +125,7 @@ export default {
               cookieStorage.remove("username");
               cookieStorage.remove("password");
             }
+            res.data.data.isadmin = true;
             this.set_user_info({
               user: res.data.data,
               login: true,

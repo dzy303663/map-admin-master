@@ -3,26 +3,19 @@
     <div class="left-side-inner">
       <router-link to="/" class="logo block">
         <img src="./images/logo.svg" alt="AdminX">
-        <div>Welcome </div>
+        <div>Welcome</div>
       </router-link>
-      <el-menu
-        class="menu-box"
-        theme="dark"
-        router
-        :default-active="$route.path">
-        <div
-          v-for="(item, index) in nav_menu_data"
-          :key="index">
+      <el-menu class="menu-box" theme="dark" router :default-active="$route.path">
+        <div v-for="(item, index) in nav_menu_data" :key="index">
           <el-menu-item
             class="menu-list"
             v-if="typeof item.child === 'undefined'"
-            :index="item.path">
+            :index="item.path"
+          >
             <i class="icon fa" :class="item.icon"></i>
             <span v-text="item.title" class="text"></span>
           </el-menu-item>
-          <el-submenu
-            :index="item.path"
-            v-else>
+          <el-submenu :index="item.path" v-else>
             <template slot="title">
               <i class="icon fa" :class="item.icon"></i>
               <span v-text="item.title" class="text"></span>
@@ -31,7 +24,8 @@
               class="menu-list"
               v-for="(sub_item, sub_index) in item.child"
               :index="sub_item.path"
-              :key="sub_index">
+              :key="sub_index"
+            >
               <!--<i class="icon fa" :class="sub_item.icon"></i>-->
               <span v-text="sub_item.title" class="text"></span>
             </el-menu-item>
@@ -42,87 +36,21 @@
   </div>
 </template>
 <script type="text/javascript">
-  export default{
-    name: 'slide',
-    data(){
-      return {
-        nav_menu_data: [{
-          title: "首页",
-          path: "/home",
-          icon: "fa-home"
-        }, {
-          title: "实习单位选择",
-          path: "/table",
-          icon: "fa-gears",
-          /* child: [{
-            title: "组织机构",
-            path: "/table/organization",
-            icon: "fa-table",
-          }, {
-            title: "部门管理",
-            path: "/table/dept"
-          },{
-            title: "岗位管理",
-            path: "/table/job"
-          },{
-            title: "人员管理",
-            path: "/table/base"
-          },{
-            title: "日志管理",
-            path: "/table/log"
-          }] */
-        }, {
-          title: "实习相关文件下载",
-          path: "/monitor",
-          icon: "fa-align-justify",
-         /*  child: [{
-            title: "新闻管理",
-            path: "/monitor/news"
-          },{
-            title: "公告管理",
-            path: "/monitor/tips"
-          }] */
-        },{
-          title: "请假申请",
-          path: "/map",
-          icon: "fa-map",
-          /* child: [{
-            title: "热点搜索",
-            path: "/map/hot"
-          },{
-            title: "行政区划",
-            path: "/map/area"
-          },{
-            title: "地图查看",
-            path: "/map/search"
-          },{
-            title: "路线导航",
-            path: "/map/road"
-          }] */
-        },{
-          title: "实习报告提交",
-          path: "/monitor",
-          icon: "fa-align-justify",
-         /*  child: [{
-            title: "新闻管理",
-            path: "/monitor/news"
-          },{
-            title: "公告管理",
-            path: "/monitor/tips"
-          }] */
-        },{
-          title: "查看出勤情况",
-          path: "/monitor",
-          icon: "fa-align-justify",
-         /*  child: [{
-            title: "新闻管理",
-            path: "/monitor/news"
-          },{
-            title: "公告管理",
-            path: "/monitor/tips"
-          }] */
-        }],
-      }
+import MenuList from "common/menu";
+export default {
+  name: "slide",
+  data() {
+    return {
+      nav_menu_data: []
+    };
+  },
+  computed: { 
+    role(){
+        return this.$store.state.user_info.user.role;
     }
+  },
+  created() {
+    this.nav_menu_data = MenuList[this.role];
   }
+};
 </script>
