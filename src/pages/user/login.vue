@@ -49,7 +49,6 @@ import Check from "./check";
 //  设置记住我
 import { cookieStorage } from "common/storage";
 const url = "/api/logserver";
-import axios from "axios";
 // import "../../../static/loginCanvas.js";
 export default {
   components: {
@@ -100,7 +99,7 @@ export default {
         this.load_data = true;
         //登录提交
         cookieStorage.set("checked", this.checked);
-        axios
+        this.axios
           .post("/api/login", {
             params: {
               method: "login",
@@ -130,7 +129,7 @@ export default {
               user: res.data.data,
               login: true,
             });
-            this.$message.success("登录成功");
+            this.$message.success(`欢迎回来，${res.data.data.name}`);
             setTimeout(this.$router.push({ path: "/" }), 500);
           })
           .catch(err => {

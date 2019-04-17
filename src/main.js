@@ -17,8 +17,10 @@ import api from './api'
 import Plugins from 'plugins'
 //导入主视图文件
 import App from './App'
+//导入axios
+import axios from 'axios'
 //导入mock数据
-import './mock'
+// import './mock'
 import $ from 'jquery'
 import BaiduMap from 'vue-baidu-map'
 
@@ -41,6 +43,9 @@ Vue.use(Plugins)
 
 //使用api
 Vue.use(api)
+
+//使用axios
+Vue.prototype.axios = axios
 
 //发布后是否显示提示
 Vue.config.productionTip = false

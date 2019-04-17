@@ -19,6 +19,8 @@ import loginComponent from 'pages/user/login'
 //base table
 import baseTableComponent from 'pages/table/base'
 
+// import profile from 'pages/profile/profile'
+
 import Log from 'pages/table/log'
 import saveTableComponent from 'pages/table/save'
 import Dept from 'pages/table/dept'
@@ -77,6 +79,14 @@ const routes = [{
       auth: true
     }
   }, {
+    path: '/profile/:id',
+    name: 'profile',
+    component: require('pages/profile/profile'),
+    meta: {
+      title: "个人主页",
+      auth: true
+    }
+  },{
     path: '/table/base',
     name: 'tableBase',
     component: baseTableComponent,
