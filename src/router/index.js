@@ -25,7 +25,7 @@ import Log from 'pages/table/log'
 import saveTableComponent from 'pages/table/save'
 import Dept from 'pages/table/dept'
 import Job from 'pages/table/job'
-import Organization from 'pages/table/organization'
+import Company from 'pages/company'
 import SaveDept from 'pages/table/saveDept'
 import SaveJob from 'pages/table/saveJob'
 import SaveOrgan from 'pages/table/saveOrgan'
@@ -113,9 +113,9 @@ const routes = [{
   },{
     path:'table/organization',
     name:'tableOrganization',
-    component:Organization,
+    component:Company,
     meta:{
-      title:"组织机构",
+      title:"企业列表",
       auth:true
     }
   },{

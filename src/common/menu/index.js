@@ -8,7 +8,7 @@ export default {
         path: "/table",
         icon: "fa-gears",
         child: [{
-          title: "组织机构",
+          title: "企业列表",
           path: "/table/organization",
           icon: "fa-table",
         }, {
@@ -88,7 +88,7 @@ export default {
       path: "/table",
       icon: "fa-gears",
       child: [{
-        title: "组织机构",
+        title: "企业列表",
         path: "/table/organization",
         icon: "fa-table",
       }, {

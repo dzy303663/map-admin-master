@@ -31,32 +31,36 @@
           <template scope="scope"><span>{{scope.$index+(currentPage - 1) * length + 1}} </span></template>
         </el-table-column>
         <el-table-column
-          prop="organ_id"
-          label="组织ID"
+          prop="user_id"
+          label="企业ID"
           width="200"
-          v-if="false"
         >
         </el-table-column>
         <el-table-column
-          prop="organ_name"
-          label="组织名称"
-          width="790"
+          prop="name"
+          label="企业名称"
         >
         </el-table-column>
         <el-table-column
-          prop="deptlist"
-          label="组织部门"
-          width="400"
+          prop="company_link"
+          label="企业官网"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="open_offer"
+          label="岗位"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="tel"
+          label="联系电话"
         >
         </el-table-column>
         <el-table-column
           label="操作"
           width="165">
           <template scope="props">
-            <router-link :to="{name: 'saveOrgan', params: {organ_id: props.row.organ_id}}" tag="span">
-              <el-button type="info" size="small" icon="edit">修改</el-button>
-            </router-link>
-            <el-button v-if="props.row.organ_id != get_user_info.organ_id" type="danger" size="small" icon="delete" @click="delete_organ(props.row.organ_id)">删除</el-button>
+              <el-button type="info" size="small" icon="edit">申请</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -180,17 +184,13 @@
       //获取数据
       // $fetch.api_table 等于api/index.js
       get_table_data(){
-         this.load_data = true
-          this.axios.get(url,{
-          params:{
-            method:"organlist",
-            page: this.currentPage,
-            length: this.length
-          }
-        }).then((res)=>{
-            this.table_data=res.data.result
-            this.currentPage=res.data.page
-            this.total = res.data.total
+        this.load_data = true
+        this.axios.get('/api/company',{
+
+        }).then(({data})=>{
+            this.table_data=data
+            /* this.currentPage=res.data.page
+            this.total = res.data.total */
             setTimeout(this.load_data = false,2000)
           })
       },

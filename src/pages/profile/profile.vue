@@ -9,7 +9,7 @@
               <el-input
                 :disabled="flag"
                 type="number"
-                v-model="form.personid"
+                v-model="form.account"
                 placeholder="请输入ID"
                 style="width: 250px;"
               ></el-input>
@@ -30,9 +30,9 @@
                 style="width: 250px;"
               ></el-input>
             </el-form-item>
-            <el-form-item label="系:" prop="department">
+            <el-form-item label="系:" prop="departName">
               <el-input
-                v-model="form.department"
+                v-model="form.departName"
                 :disabled="flag"
                 placeholder="请输入内容"
                 style="width: 250px;"
@@ -133,7 +133,7 @@ export default {
       form: {
         account: null,
         role: null,
-        department: null,
+        departName: null,
         class: null,
         password: null,
         checkPass: null,
@@ -167,9 +167,6 @@ export default {
   methods: {
     get_form_data() {
       this.load_data = true;
-      console.log('ccc')
-      console.dir(this.axios)
-      console.log(this.route_id)
       this.axios
         .get("/api/userInfo", { params: { 'user_id': this.route_id } })
         .then(({ data }) => {
@@ -187,39 +184,22 @@ export default {
         var method = this.flag ? "changePerson" : "addPerson";
 
         var personid = this.form.personid;
-        axios
-          .get(url, {
+        this.axios
+          .post('/api/userInfo/update', {
             params: {
-              method: method,
-              personid: personid,
-              person: this.form
+              ...this.form
             }
           })
           .then(res => {
             console.log(res);
             this.$message.success(res.data);
-            setTimeout(this.$router.back(), 500);
+            this.on_submit_loading = false;
+
+            this.get_form_data();
+
           })
           .catch(err => {
-            this.load_data = false;
-            this.on_submit_loading = false;
-            var message = "";
-            if (err.response.status === 404) {
-              message = "信息有误，添加失败！";
-            }
-            this.$notify.info({
-              title: "温馨提示",
-              message: message
-            });
           });
-        // this.$fetch.api_table.save(this.form)
-        //   .then(({msg}) => {
-        //     this.$message.success(msg)
-        //     setTimeout(this.$router.back(), 500)
-        //   })
-        //   .catch(() => {
-        //     this.on_submit_loading = false
-        //   })
       });
     }
   },
