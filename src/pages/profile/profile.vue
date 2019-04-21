@@ -11,7 +11,7 @@
                 type="number"
                 v-model="form.account"
                 placeholder="请输入ID"
-                style="width: 250px;"
+                style="width: 350px;"
               ></el-input>
             </el-form-item>
             <el-form-item label="姓名:" prop="name">
@@ -19,7 +19,7 @@
                 v-model="form.name"
                 :disabled="flag"
                 placeholder="请输入内容"
-                style="width: 250px;"
+                style="width: 350px;"
               ></el-input>
             </el-form-item>
             <el-form-item label="角色:" prop="role">
@@ -27,7 +27,7 @@
                 v-model="form.role"
                 :disabled="flag"
                 placeholder="请输入内容"
-                style="width: 250px;"
+                style="width: 350px;"
               ></el-input>
             </el-form-item>
             <el-form-item label="系:" prop="departName">
@@ -35,7 +35,7 @@
                 v-model="form.departName"
                 :disabled="flag"
                 placeholder="请输入内容"
-                style="width: 250px;"
+                style="width: 350px;"
               ></el-input>
             </el-form-item>
             <el-form-item label="班级:" prop="class">
@@ -43,18 +43,18 @@
                 v-model="form.class"
                 :disabled="flag"
                 placeholder="请输入内容"
-                style="width: 250px;"
+                style="width: 350px;"
               ></el-input>
             </el-form-item>
             <el-form-item label="密码:" prop="pw">
-              <el-input type="password" v-model="form.pw" placeholder="请输入内容" style="width: 250px;"></el-input>
+              <el-input type="password" v-model="form.pw" placeholder="请输入内容" style="width: 350px;"></el-input>
             </el-form-item>
             <el-form-item label="确认密码" prop="checkPass">
               <el-input
                 type="password"
                 v-model="form.checkPass"
                 auto-complete="off"
-                style="width: 250px;"
+                style="width: 350px;"
               ></el-input>
             </el-form-item>
             <el-form-item label="性别:">
@@ -64,14 +64,14 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="联系方式:" prop="tel">
-              <el-input placeholder="请输入内容" v-model="form.tel" style="width: 250px;"></el-input>
+              <el-input placeholder="请输入内容" v-model="form.tel" style="width: 350px;"></el-input>
             </el-form-item>
             <el-form-item label="企业：" prop="company">
               <el-input
                 :disabled="flag"
                 placeholder="请输入内容"
                 v-model="form.company"
-                style="width: 250px;"
+                style="width: 350px;"
               ></el-input>
             </el-form-item>
             <el-form-item label="岗位：" prop="position">
@@ -79,15 +79,27 @@
                 :disabled="flag"
                 placeholder="请输入内容"
                 v-model="form.position"
-                style="width: 250px;"
+                style="width: 350px;"
               ></el-input>
+            </el-form-item>
+            <el-form-item label="简历：" prop="resume" v-if="form.resume">
+              <a :href="form.resume.path" target="_blank">{{form.resume.name}}</a>
+              <el-button @click="uploadClick">
+                更改简历
+              </el-button>
+            </el-form-item>
+            <el-form-item label="上传简历：" prop="resume" v-if="!form.resume">
+              <el-button @click="uploadClick">
+                上传简历
+              </el-button>
+              <input type="file" ref="resume" @change="uploadResume" style="display: none;">
             </el-form-item>
             <el-form-item label="自我介绍：" prop="introduce">
               <el-input
                 type="textarea"
                 placeholder="请输入内容"
                 v-model="form.introduce"
-                style="width: 250px;"
+                style="width: 400px;"
               ></el-input>
             </el-form-item>
             <el-form-item>
@@ -108,7 +120,7 @@ export default {
     var checkpass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.form.password) {
+      } else if (value !== this.form.pw) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -142,7 +154,8 @@ export default {
         position: null,
         introduce: null,
         sex: "男",
-        tel: null
+        tel: null,
+        resume: null,
       },
       route_id: this.$route.params.id,
       load_data: false,
@@ -171,6 +184,7 @@ export default {
         .get("/api/userInfo", { params: { 'user_id': this.route_id } })
         .then(({ data }) => {
           this.form = data;
+          this.form.checkPass = this.form.pw;
           this.load_data = false;
         }).catch(err => {
           console.log(err)
@@ -197,10 +211,29 @@ export default {
 
             this.get_form_data();
 
-          })
+          }) 
           .catch(err => {
           });
       });
+    },
+    uploadClick(){
+      console.dir(this.$refs.resume)
+      this.$refs.resume.click()
+    },
+    uploadResume(e){
+      var file = e.target.files[0];
+      var formdata = new FormData();
+      console.log(e.target.files)
+      formdata.append("file", file, file.name)
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'  //以表单传数据的格式来传递fromdata
+        }
+      };
+      this.axios.post('/api/upload',formdata,config).then(({data}) => {
+        console.log('aaa')
+        this.form.resume = {path: data.path,name: data.name};
+      })
     }
   },
   components: {
