@@ -30,7 +30,7 @@
                 style="width: 350px;"
               ></el-input>
             </el-form-item>
-            <el-form-item label="系:" prop="departName">
+            <el-form-item label="系:" prop="departName" v-if="form.departName">
               <el-input
                 v-model="form.departName"
                 :disabled="flag"
@@ -38,7 +38,7 @@
                 style="width: 350px;"
               ></el-input>
             </el-form-item>
-            <el-form-item label="班级:" prop="class">
+            <el-form-item label="班级:" prop="class" v-if="form.class">
               <el-input
                 v-model="form.class"
                 :disabled="flag"
@@ -66,7 +66,7 @@
             <el-form-item label="联系方式:" prop="tel">
               <el-input placeholder="请输入内容" v-model="form.tel" style="width: 350px;"></el-input>
             </el-form-item>
-            <el-form-item label="企业：" prop="company">
+            <el-form-item label="企业：" prop="company" v-if="form.company">
               <el-input
                 :disabled="flag"
                 placeholder="请输入内容"
@@ -74,7 +74,7 @@
                 style="width: 350px;"
               ></el-input>
             </el-form-item>
-            <el-form-item label="岗位：" prop="position">
+            <el-form-item label="岗位：" prop="position" v-if="form.position">
               <el-input
                 :disabled="flag"
                 placeholder="请输入内容"
@@ -82,15 +82,21 @@
                 style="width: 350px;"
               ></el-input>
             </el-form-item>
-            <el-form-item label="简历：" prop="resume" v-if="form.resume">
+            <el-form-item label="简历：" prop="resume" v-if="form.resume && (role == '学生' || role == '企业')">
               <a :href="form.resume.path" target="_blank">{{form.resume.name}}</a>
-              <el-button @click="uploadClick">
+              <el-button @click="uploadClick" v-if="role == '学生'">
                 更改简历
               </el-button>
+              <el-button @click="uploadClick" v-if="role == '企业'">
+                更改资质文件
+              </el-button>
             </el-form-item>
-            <el-form-item label="上传简历：" prop="resume" v-if="!form.resume">
-              <el-button @click="uploadClick">
+            <el-form-item label="上传简历：" prop="resume" v-if="!form.resume && (role == '学生' || role == '企业')">
+              <el-button @click="uploadClick" v-if="role == '学生'">
                 上传简历
+              </el-button>
+              <el-button @click="uploadClick" v-if="role == '企业'">
+                上传资质文件
               </el-button>
               <input type="file" ref="resume" @change="uploadResume" style="display: none;">
             </el-form-item>
@@ -103,7 +109,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="on_submit_form" :loading="on_submit_loading">立即提交</el-button>
+              <el-button type="primary" @click="on_submit_form" :loading="on_submit_loading">确定</el-button>
               <el-button @click="$router.back()">取消</el-button>
             </el-form-item>
           </el-form>
@@ -114,6 +120,7 @@
 </template>
 <script type="text/javascript">
 import { panelTitle } from "components";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -173,6 +180,11 @@ export default {
         tel: [{ required: true, message: "电话号码不能为空", trigger: "blur" }]
       }
     };
+  },
+  computed: {
+    role(){
+      return this.$store.state.user_info.user.role;
+    }
   },
   created() {
     this.get_form_data();
