@@ -60,17 +60,17 @@ export default {
         type: "warning"
       })
         .then(() => {
-          axios
+          /* axios
             .get(url, {
               params: {
                 method: "logout"
               }
             })
-            .then(res => {
-              this.$message.success(res.data.msg);
+            .then(res => { */
+              this.$message.success('已退出');
               this.set_user_info(null);
               setTimeout(this.$router.replace({ name: "login" }), 500);
-            });
+           /*  }); */
         })
         .catch(() => {});
     },

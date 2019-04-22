@@ -134,6 +134,38 @@ const routes = [{
       title: "新闻管理",
       auth: true
     }
+  },/*  {
+    path: '/leave/ask',
+    name: 'leave',
+    component: News,
+    meta: {
+      title: "申请列表",
+      auth: true
+    }
+  } */,{
+    path: '/files/list',
+    name: 'files',
+    component: require('pages/relativeFile/index'),
+    meta: {
+      title: "相关文件",
+      auth: true
+    }
+  },{
+    path: '/leave/ask',
+    name: 'askList',
+    component: require('pages/askLeave/index'),
+    meta: {
+      title: "申请列表",
+      auth: true
+    }
+  },{
+    path: '/leave/add',
+    name: 'askAdd',
+    component: require('pages/askLeave/askEdit'),
+    meta: {
+      title: "请假申请",
+      auth: true
+    }
   },{
     path: '/monitor/newsDetail/:news_id',
     name: 'newsDetail',

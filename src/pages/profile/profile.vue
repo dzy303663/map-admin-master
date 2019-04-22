@@ -5,6 +5,10 @@
       <el-row>
         <el-col :span="8">
           <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+            <el-form-item label="头像:" prop="headImg">
+              <img class="head_img" :src="'http://localhost:5200'+form.headImg.replace('/api','')" @click="uploadClick(2)" >
+              <input type="file" ref="headImg" @change="uploadHeadImg" style="display: none;">
+            </el-form-item>
             <el-form-item label="账号:" prop="account">
               <el-input
                 :disabled="flag"
@@ -17,7 +21,7 @@
             <el-form-item label="姓名:" prop="name">
               <el-input
                 v-model="form.name"
-                :disabled="flag"
+                :disabled="!flag"
                 placeholder="请输入内容"
                 style="width: 350px;"
               ></el-input>
@@ -84,18 +88,19 @@
             </el-form-item>
             <el-form-item label="简历：" prop="resume" v-if="form.resume && (role == '学生' || role == '企业')">
               <a :href="form.resume.path" target="_blank">{{form.resume.name}}</a>
-              <el-button @click="uploadClick" v-if="role == '学生'">
+              <el-button @click="uploadClick(1)" v-if="role == '学生'">
                 更改简历
               </el-button>
-              <el-button @click="uploadClick" v-if="role == '企业'">
+              <el-button @click="uploadClick(1)" v-if="role == '企业'">
                 更改资质文件
               </el-button>
+              <input type="file" ref="resume" @change="uploadResume" style="display: none;">
             </el-form-item>
             <el-form-item label="上传简历：" prop="resume" v-if="!form.resume && (role == '学生' || role == '企业')">
-              <el-button @click="uploadClick" v-if="role == '学生'">
+              <el-button @click="uploadClick(1)" v-if="role == '学生'">
                 上传简历
               </el-button>
-              <el-button @click="uploadClick" v-if="role == '企业'">
+              <el-button @click="uploadClick(1)" v-if="role == '企业'">
                 上传资质文件
               </el-button>
               <input type="file" ref="resume" @change="uploadResume" style="display: none;">
@@ -121,7 +126,8 @@
 <script type="text/javascript">
 import { panelTitle } from "components";
 import { mapGetters } from "vuex";
-
+import { mapActions } from "vuex";
+import { SET_USER_INFO } from "store/actions/type";
 export default {
   data() {
     var checkpass = (rule, value, callback) => {
@@ -190,12 +196,20 @@ export default {
     this.get_form_data();
   },
   methods: {
+    ...mapActions({
+      set_user_info: SET_USER_INFO
+    }),
     get_form_data() {
       this.load_data = true;
       this.axios
         .get("/api/userInfo", { params: { 'user_id': this.route_id } })
         .then(({ data }) => {
           this.form = data;
+          this.set_user_info({
+              user: data,
+              login: true,
+              isadmin: true
+            });
           this.form.checkPass = this.form.pw;
           this.load_data = false;
         }).catch(err => {
@@ -217,12 +231,9 @@ export default {
             }
           })
           .then(res => {
-            console.log(res);
             this.$message.success(res.data);
             this.on_submit_loading = false;
-
             this.get_form_data();
-
           }) 
           .catch(err => {
           });
@@ -246,6 +257,26 @@ export default {
         console.log('aaa')
         this.form.resume = {path: data.path,name: data.name};
       })
+    },
+    uploadClick(type){
+      switch(type){
+        case 1: this.$refs.resume.click();break;
+        case 2: this.$refs.headImg.click();break;
+      }
+    },
+    uploadHeadImg(e){
+      var file = e.target.files[0];
+      var formdata = new FormData();
+      console.log(e.target.files)
+      formdata.append("file", file, file.name)
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'  //以表单传数据的格式来传递fromdata
+        }
+      };
+      this.axios.post('/api/upload',formdata,config).then(({data}) => {
+        this.form.headImg = data.path
+      })
     }
   },
   components: {
@@ -253,3 +284,12 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.head_img{
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-left: 25px;
+  cursor: pointer;
+}
+</style>

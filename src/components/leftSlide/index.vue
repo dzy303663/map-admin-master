@@ -3,8 +3,14 @@
     <div class="left-side-inner">
       <router-link to="/" class="logo block">
         <img src="./images/logo.svg" alt="AdminX">
-        <div>Welcome</div>
       </router-link>
+      <div>
+        <img class="head_img" :src="'http://localhost:5200'+headImg.replace('/api','')" alt="">
+        <div class="head_title">
+          <p>{{name}}</p>
+          <p><i v-if="position" class="el-icon-location" style="color: green;margin-right:5px;cursor: pointer;" @click="sign()"></i>在线</p>
+        </div>
+      </div>
       <el-menu class="menu-box" theme="dark" router :default-active="$route.path">
         <div v-for="(item, index) in nav_menu_data" :key="index">
           <el-menu-item
@@ -47,10 +53,51 @@ export default {
   computed: { 
     role(){
         return this.$store.state.user_info.user.role;
+    },
+    headImg(){
+      return this.$store.state.user_info.user.headImg;
+    },
+    name(){
+      return this.$store.state.user_info.user.name;
+    },
+    position(){
+      return this.$store.state.user_info.user.position;
     }
   },
   created() {
     this.nav_menu_data = MenuList[this.role];
-  }
+    console.log(this.$store.state.user_info)
+  },
+  methods: {
+    sign(){
+      this.axios.post('/api/sign',{signTime: new Date()}).then(({data}) => {
+        this.$message.success(data.msg)
+      })
+    }
+  },
 };
 </script>
+<style lang="scss" scoped>
+.head_img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-left: 17px;
+    margin-bottom: 15px;
+    box-shadow: 0 0 5px #0c0d0d;
+}
+.head_title{
+  display: inline-block;
+  height: 60px;
+  float: right;
+  margin-right: 85px;
+  color: #51769b;
+  >p:nth-child(1){
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+  >p:nth-child(2){
+    font-size: 13px;
+  }
+}
+</style>

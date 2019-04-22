@@ -28,7 +28,7 @@
           width="200">
           <template scope="scope"><span>{{scope.$index+(currentPage - 1) * length + 1}} </span></template>
         </el-table-column>-->
-        <el-table-column prop="user_id" label="企业ID" width="200"></el-table-column>
+        <el-table-column prop="user_id" label="企业ID" width="70"></el-table-column>
         <el-table-column prop="name" label="企业名称"></el-table-column>
         <el-table-column prop="introduce" label="企业介绍"></el-table-column>
         <el-table-column prop="company_link" label="企业官网"></el-table-column>
@@ -62,7 +62,7 @@
         <el-table-column prop="tel" label="联系电话"></el-table-column>
         <el-table-column label="操作" width="165">
           <template slot-scope="scope">
-            <el-button type="info" size="small" icon="edit" @click="handleApplyClick(scope.row)">申请</el-button>
+            <el-button type="primary" size="small" icon="edit" @click="handleApplyClick(scope.row)">申请</el-button>
           </template>
         </el-table-column>
       </el-table>
