@@ -10,20 +10,7 @@
             <el-form-item label="标题:" prop="title">
               <el-input v-model="form.title" placeholder="请输入内容" style="width: 250px;"></el-input>
             </el-form-item>
-            <el-form-item label="起止时间:" >
-              <el-date-picker
-                v-model="value1"
-                type="datetimerange"
-                value-format="yyyy-MM-dd hh:mm:ss"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                :default-time="['12:00:00']"
-                @change="handleDatePick"
-                format="yyyy-MM-dd hh:mm:ss"
-                >
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="请假理由:" prop="content">
+            <el-form-item label="报告内容:" prop="content">
               <quill-editor
                 id="QE"
                 v-model="form.content"
@@ -74,7 +61,6 @@
     },
     data(){
       return {
-        value1: '',
         editorOption:{},
         flag:true,
         form: {
@@ -111,7 +97,6 @@
         }).then(({data})=>{
           // console.log(data)
           this.form=data
-          this.value1 = [data.startTime,data.endTime];
           this.load_data = false
         })
       },
@@ -121,9 +106,7 @@
           if (!valid) return false
           this.on_submit_loading = true
           // this.form.createtime=new Date().Format("yyyy-MM-dd   hh:mm:ss");
-          this.form.startTime = this.value1[0];
-          this.form.endTime = this.value1[1];;
-          axios.post('/api/user/askfor/add',{
+          axios.post('/api/user/report/add',{
               ...this.form,
               'creator': this.get_user_info.user
           })

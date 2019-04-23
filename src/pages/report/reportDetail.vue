@@ -29,7 +29,6 @@
             </div>
           </div>
           <div style="clear:both"></div>
-          <div>起止时间：<span style="color: grey;font-weight: 600;">{{form.startTime}} -- {{form.endTime}}</span></div>
           <div style="line-height: 30px;font-size: 17px;font-family: 'Microsoft YaHei'; border-bottom: 1px solid rgba(100,100,100,.2);padding-bottom: 40px">
             <div v-html="this.form.content" class="ql-editor"></div>
           </div>
@@ -75,7 +74,7 @@
       //获取数据
      get_form_data(){
         this.load_data = true
-        axios.get('/api/user/askFor/detail',{
+        axios.get('/api/user/report/detail',{
           params:{
             id:this.route_id
           }

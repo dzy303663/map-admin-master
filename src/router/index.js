@@ -175,6 +175,46 @@ const routes = [{
       auth: true
     }
   },{
+    path: '/leave/ask/datail/:id',
+    name: 'askDetail',
+    component: require('pages/askLeave/askDetail'),
+    meta: {
+      title: "请假详情",
+      auth: true
+    }
+  },{
+    path: '/report/index',
+    name: 'askList',
+    component: require('pages/report/index'),
+    meta: {
+      title: "报告列表",
+      auth: true
+    }
+  },{
+    path: '/report/add',
+    name: 'reportAdd',
+    component: require('pages/report/reportEdit'),
+    meta: {
+      title: "实习报告",
+      auth: true
+    }
+  },{
+    path: '/report/edit/:id',
+    name: 'reportEdit',
+    component: require('pages/report/reportEdit'),
+    meta: {
+      title: "实习报告",
+      auth: true
+    }
+  },{
+    path: '/report/datail/:id',
+    name: 'reportDetail',
+    component: require('pages/report/reportDetail'),
+    meta: {
+      title: "报告详情",
+      auth: true
+    }
+  },{
     path: '/monitor/newsDetail/:news_id',
     name: 'newsDetail',
     component: NewsDetail,

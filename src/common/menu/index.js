@@ -30,14 +30,11 @@ export default {
         }]
       },{
         title: "实习报告提交",
-        path: "/monitor",
+        path: "/report",
         icon: "fa-align-justify",
         child: [{
-          title: "新闻管理",
-          path: "/monitor/news"
-        },{
-          title: "公告管理",
-          path: "/monitor/tips"
+          title: "实习报告",
+          path: "/report/index"
         }]
       },{
         title: "查看出勤情况",

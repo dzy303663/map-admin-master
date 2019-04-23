@@ -45,7 +45,7 @@
         </bottom-tool-bar>
       </el-card>
 
-      <el-card class="box-card" style="margin:40px 3% 0 0;width: 35%;float: left">
+      <el-card class="box-card" style="margin:40px 3% 0 0;width: 25%;float: left">
         <div slot="header" class="clearfix">
           <i class="fa fa-newspaper-o fa-lg" aria-hidden="true" ></i>
           <span>最新文件下载</span>
@@ -72,7 +72,7 @@
           </div>
         </bottom-tool-bar>
       </el-card>
-      <el-card class="box-card" style="margin: 40px 3% 0 0;width: 358px;float: left">
+      <el-card class="box-card" style="margin: 40px 3% 0 0;max-width: 358px;float: left">
         <div slot="header" class="clearfix">
           <i class="fa fa-list fa-lg" aria-hidden="true"></i>
           <span>签到</span>

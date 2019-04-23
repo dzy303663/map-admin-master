@@ -4,7 +4,7 @@
       <el-button @click.stop="on_refresh" size="small">
         <i class="fa fa-refresh"></i>
       </el-button>
-      <router-link :to="{name: 'askAdd'}" tag="span">
+      <router-link :to="{name: 'reportAdd'}" tag="span">
         <el-button type="primary" icon="plus" size="small">添加数据</el-button>
       </router-link>
     </panel-title>
@@ -40,34 +40,22 @@
         </el-table-column>
         <el-table-column
           prop="createtime"
-          label="请假起止日期"
-          width="300"
+          label="提交时间"
           align='center'
           sortable
         >
           <template slot-scope="scope">
             <div>
-              {{scope.row.startTime}}--{{scope.row.endTime}}
+              {{scope.row.meta.updateAt}}
             </div>
           </template>
         </el-table-column>
         <el-table-column
           prop="createName"
-          label="审批人"
+          label="提交人"
           width="150"
         >
-         <template slot-scope="scope" v-if="scope.row.optionUser">
-            <div>
-              {{scope.row.optionUser.name}}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="createName"
-          label="申请人"
-          width="150"
-        >
-         <template slot-scope="scope">
+         <template slot-scope="scope" >
             <div>
               {{scope.row.creator.name}}
             </div>
@@ -75,7 +63,7 @@
         </el-table-column>
         <el-table-column
           prop="content"
-          label="请假原因"
+          label="内容"
           width="300"
           sortable
         >
@@ -95,10 +83,10 @@
           label="操作"
           width="180">
           <template scope="props">
-            <router-link :to="{name: 'askDetail', params: {id:props.row._id}}" tag="span" >
+            <router-link :to="{name: 'reportDetail', params: {id:props.row._id}}" tag="span" >
               <el-button type="primary" size="small" icon="edit">查看</el-button>
             </router-link>
-            <router-link :to="{name: 'askEdit', params: {id:props.row._id}}" tag="span" v-if="role == '学生'">
+            <router-link :to="{name: 'reportEdit', params: {id:props.row._id}}" tag="span" v-if="role == '学生'">
               <el-button type="info" size="small" icon="edit">修改</el-button>
             </router-link>
             <!-- <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row.news_id)">删除</el-button> -->
@@ -245,7 +233,7 @@
       // $fetch.api_table 等于api/index.js
       get_table_data(){
         this.load_data = true
-        axios.get('/api/user/askfor',{
+        axios.get('/api/user/report',{
           params:{
             method:"newsList",
             page: this.currentPage,
