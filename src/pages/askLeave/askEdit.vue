@@ -7,38 +7,31 @@
       <el-row>
         <el-col :span="8">
           <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-            <el-form-item label="新闻题目:" prop="newstitle">
-              <el-input v-model="form.newstitle" placeholder="请输入内容" style="width: 250px;"></el-input>
+            <el-form-item label="标题:" prop="title">
+              <el-input v-model="form.title" placeholder="请输入内容" style="width: 250px;"></el-input>
             </el-form-item>
             <el-form-item v-if="flag" label="作者" prop="newsauthor">
               <el-input v-model="form.newsauthor" placeholder="请输入内容" style="width: 250px;"></el-input>
             </el-form-item>
-            <el-form-item label="文章内容:" prop="context">
+            <el-form-item label="起止时间:" >
+              <el-date-picker
+                v-model="value1"
+                type="datetimerange"
+                value-format="yyyy-MM-dd hh:mm:ss"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                :default-time="['12:00:00']"
+                @change="handleDatePick"
+                format="yyyy-MM-dd hh:mm:ss"
+                >
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="请假理由:" prop="content">
               <quill-editor
                 id="QE"
-                v-model="form.context"
+                v-model="form.content"
                 :options="editorOption">
               </quill-editor>
-            </el-form-item>
-            <el-form-item label="关键词" prop="keyword">
-              <el-input
-                placeholder="请输入内容"
-                v-model="form.keyword"
-                style="width: 250px;">
-              </el-input>
-            </el-form-item>
-            <el-form-item label="是否HOT:" prop="hot">
-              <el-radio-group v-model="form.hot">
-                <el-radio :label="true">是</el-radio>
-                <el-radio :label="false">否</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item  v-if="flag" label="最近编辑时间:" prop="createtime">
-              <el-input
-                :disabled="flag"
-                v-model="form.createtime"
-                style="width: 200px;">
-              </el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="on_submit_form" :loading="on_submit_loading">立即提交</el-button>
@@ -84,24 +77,19 @@
     },
     data(){
       return {
+        value1: '',
         editorOption:{},
         flag:true,
         form: {
-          context:null,
-          createtime:null,
-          hot:false,
-          keyword: null,
-          news_id: null,
-          newstitle: null,
-          newsauthor:null
+          content:null,
+          title: null,
         },
-        route_id: this.$route.params.news_id,
+        route_id: this.$route.params.id,
         load_data: false,
         on_submit_loading: false,
         rules: {
-          newstitle: [{required: true, message: '请输入标题', trigger: 'blur'}],
-          context: [{required: true, message: '请输入内容', trigger: 'blur'}],
-          newsauthor: [{required: true, message: '请输入作者', trigger: 'blur'}],
+          title: [{required: true, message: '请输入标题', trigger: 'blur'}],
+          content: [{required: true, message: '请输入内容', trigger: 'blur'}],
           // keyword: [{required: true, message: '请输入关键词', trigger: 'blur'}]
         }
       }
@@ -119,10 +107,9 @@
       //获取数据
       get_form_data(){
         this.load_data = true
-        axios.get(url,{
+        axios.get('/api/user/askFor/detail',{
           params:{
-            method:"getNews",
-            news_id:this.route_id
+            id:this.route_id
           }
         }).then(({data})=>{
           // console.log(data)
@@ -135,18 +122,14 @@
         this.$refs.form.validate((valid) => {
           if (!valid) return false
           this.on_submit_loading = true
-          this.form.createtime=new Date().Format("yyyy-MM-dd   hh:mm:ss");
-
-          var method =this.flag?"changeNews":"addNews"
-
-          axios.get(url,{
-            params:{
-              method:method,
-              news:this.form
-            }
+          // this.form.createtime=new Date().Format("yyyy-MM-dd   hh:mm:ss");
+          this.form.startTime = this.value1[0];
+          this.form.endTime = this.value1[1];;
+          axios.post('/api/user/askfor/add',{
+              ...this.form,
+              'creator': this.get_user_info.user
           })
             .then((res) => {
-              console.log(res)
               this.$message.success(res.data)
               setTimeout(this.$router.back(), 500)
             })
@@ -163,6 +146,9 @@
               })
             })
         })
+      },
+      handleDatePick(val){
+        console.log(val)
       }
     },
     components: {

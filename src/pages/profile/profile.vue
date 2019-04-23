@@ -205,10 +205,10 @@ export default {
         .get("/api/userInfo", { params: { 'user_id': this.route_id } })
         .then(({ data }) => {
           this.form = data;
+          data.isadmin = true
           this.set_user_info({
               user: data,
               login: true,
-              isadmin: true
             });
           this.form.checkPass = this.form.pw;
           this.load_data = false;

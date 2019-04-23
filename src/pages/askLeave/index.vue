@@ -34,54 +34,68 @@
           <template scope="scope"><span>{{scope.$index+(currentPage - 1) * length + 1}} </span></template>
         </el-table-column>
         <el-table-column
-          prop="news_id"
-          label="id"
-          width="80"
-          v-if="false"
-          sortable
-        >
-        </el-table-column>
-        <el-table-column
-          prop="newstitle"
-          label="新闻标题"
-          width="500"
+          prop="title"
+          label="标题"
         >
         </el-table-column>
         <el-table-column
           prop="createtime"
-          label="创建时间"
-          width="250"
+          label="请假起止日期"
+          width="300"
+          align='center'
           sortable
         >
+          <template slot-scope="scope">
+            <div>
+              {{scope.row.startTime}}--{{scope.row.endTime}}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="newsauthor"
-          label="作者"
+          prop="createName"
+          label="审批人"
           width="150"
         >
+         <template slot-scope="scope" v-if="scope.row.optionUser">
+            <div>
+              {{scope.row.optionUser.name}}
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="keyword"
-          label="关键词"
+          prop="createName"
+          label="申请人"
+          width="150"
+        >
+         <template slot-scope="scope">
+            <div>
+              {{scope.row.creator.name}}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="content"
+          label="请假原因"
           width="300"
           sortable
         >
+          <template slot-scope="scope">
+            <div v-html="scope.row.content">
+            </div>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="hot"
-          label="是否HOT"
+          prop="status"
+          label="状态"
           width="120"
           sortable
         >
-          <template scope="props">
-            <span v-text="props.row.hot == 1 ? '是' : '否'"></span>
-          </template>
         </el-table-column>
         <el-table-column
           label="操作"
           width="180">
           <template scope="props">
-            <router-link :to="{name: 'newsEdit', params: {news_id:props.row.news_id}}" tag="span">
+            <router-link :to="{name: 'askEdit', params: {id:props.row._id}}" tag="span">
               <el-button type="info" size="small" icon="edit">修改</el-button>
             </router-link>
             <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row.news_id)">删除</el-button>
@@ -225,7 +239,7 @@
       // $fetch.api_table 等于api/index.js
       get_table_data(){
         this.load_data = true
-        axios.get(url,{
+        axios.get('/api/user/askfor',{
           params:{
             method:"newsList",
             page: this.currentPage,
@@ -233,9 +247,9 @@
           }
         }).then((res)=>{
           // console.log(res)
-          this.table_data=res.data.result
-          this.page=res.data.page
-          this.total = res.data.total
+          this.table_data=res.data
+          this.page=5
+          this.total = 10
           setTimeout(1000)
           this.load_data = false
         })

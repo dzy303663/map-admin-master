@@ -72,14 +72,18 @@
           </div>
         </bottom-tool-bar>
       </el-card>
-      <el-card class="box-card" style="margin: 40px 3% 0 0;width: 30%;float: left">
+      <el-card class="box-card" style="margin: 40px 3% 0 0;width: 358px;float: left">
         <div slot="header" class="clearfix">
           <i class="fa fa-list fa-lg" aria-hidden="true"></i>
-          <span>TodoList</span>
+          <span>签到</span>
+          <el-button style="float: right;" @click="$refs.checkin.getCheck()" size="small">
+            <i class="fa fa-refresh"></i>
+          </el-button>
         </div>
-        <todo-list></todo-list>
+        <!-- <todo-list></todo-list> -->
+        <checkin ref="checkin"></checkin>
       </el-card>
-      <el-card class="box-card" style="margin-top:40px;width: 27.8%;float: left" :body-style="{ padding: '0px' }">
+      <el-card class="box-card" style="margin-top:40px;width: 36%;float: left" :body-style="{ padding: '0px' }">
         <div slot="header" class="clearfix">
           <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
           <span>地图定位</span>
@@ -95,6 +99,7 @@
   import {panelTitle, bottomToolBar} from 'components'
   import axios from 'axios'
   import TodoList from './TodoList'
+  import Checkin from 'components/sign/checkin';
   export default{
     data(){
       return {
@@ -112,7 +117,8 @@
     components: {
       panelTitle,
       bottomToolBar,
-      TodoList
+      TodoList,
+      Checkin
     },
     created(){
       this.get_tips()

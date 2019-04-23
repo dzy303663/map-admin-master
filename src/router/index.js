@@ -167,6 +167,14 @@ const routes = [{
       auth: true
     }
   },{
+    path: '/leave/edit/:id',
+    name: 'askEdit',
+    component: require('pages/askLeave/askEdit'),
+    meta: {
+      title: "请假申请",
+      auth: true
+    }
+  },{
     path: '/monitor/newsDetail/:news_id',
     name: 'newsDetail',
     component: NewsDetail,

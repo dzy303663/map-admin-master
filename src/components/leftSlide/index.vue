@@ -91,7 +91,7 @@ export default {
   height: 60px;
   float: right;
   margin-right: 85px;
-  color: #51769b;
+  color: #cef7a9;
   >p:nth-child(1){
     margin-top: 5px;
     margin-bottom: 10px;
