@@ -112,7 +112,7 @@ export default {
       icon: "fa-gears",
       child: [{
         title: "学生投递",
-        path: "/deliver/organization",
+        path: "/deliver/index",
         icon: "fa-table",
       }]
     }, {

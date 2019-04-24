@@ -214,6 +214,15 @@ const routes = [{
       title: "报告详情",
       auth: true
     }
+  },
+  {
+    path: '/deliver/index',
+    name: 'deliver',
+    component: require('pages/deliver/index'),
+    meta: {
+      title: "实习投递",
+      auth: true
+    }
   },{
     path: '/monitor/newsDetail/:news_id',
     name: 'newsDetail',

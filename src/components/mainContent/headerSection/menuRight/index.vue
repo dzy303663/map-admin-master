@@ -77,7 +77,7 @@ export default {
     user_info() {
       //个人信息
       console.log(this.get_user_info)
-      this.$router.push({ path: `/profile/${this.get_user_info.user.user_id}` });
+      this.$router.push({ path: `/profile/${this.get_user_info.user.user_id}`});
     },
     user_setting() {
       //设置

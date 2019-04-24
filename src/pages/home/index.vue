@@ -73,7 +73,7 @@
           </div>
         </bottom-tool-bar>
       </el-card>
-      <el-card class="box-card" style="margin: 40px 3% 0 0;max-width: 358px;float: left">
+      <el-card class="box-card" style="margin: 40px 3% 0 0;max-width: 358px;float: left" v-if="role == '学生'">
         <div slot="header" class="clearfix">
           <i class="fa fa-list fa-lg" aria-hidden="true"></i>
           <span>签到</span>
@@ -82,9 +82,9 @@
           </el-button>
         </div>
         <!-- <todo-list></todo-list> -->
-        <checkin ref="checkin"></checkin>
+        <checkin ref="checkin" v-if="role == '学生'"></checkin>
       </el-card>
-      <el-card class="box-card" style="margin-top:40px;width: 36%;float: left" :body-style="{ padding: '0px' }">
+      <el-card class="box-card" style="margin-top:40px;width: 30%;float: left" :body-style="{ padding: '0px' }">
         <!-- <div slot="header" class="clearfix">
           <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
           <span>地图定位</span>
@@ -92,6 +92,8 @@
         <baidu-map id="map" :center="{lng: 114.361675, lat: 30.480878}" :zoom="15" :scroll-wheel-zoom="true">
           <bm-geolocation anchor="BMAP_ANCHOR_TOP_LEFT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
         </baidu-map> -->
+       <div style="position: prelative">
+
         <div class="chatRoom" @mouseover="showInput = true" @mouseleave="showInput = false">
           <transition
             name="fade"
@@ -102,7 +104,7 @@
             clearable
             style="position: fixed;margin:0 0 0 0;width:16%"
             @keyup.native.enter="sendMessage()"
-            v-show="showInput"
+            v-show="true"
             @mouseover="showInput = true"
             >
           </el-input>
@@ -125,6 +127,8 @@
             </div>
           </transition>
         </div>
+       </div>
+
       </el-card>
     </div>
   </div>
@@ -199,6 +203,9 @@
       },
       headImg(){
         return this.$store.state.user_info.user.headImg;
+      },
+      role(){
+        return this.$store.state.user_info.user.role;
       }
     },
     created(){

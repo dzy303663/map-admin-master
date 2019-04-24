@@ -96,7 +96,8 @@
               </el-button>
               <input type="file" ref="resume" @change="uploadResume" style="display: none;">
             </el-form-item>
-            <el-form-item label="上传简历：" prop="resume" v-if="!form.resume && (role == '学生' || role == '企业')">
+            <el-form-item label="上传资质：" prop="resume" v-if="form.file && (role == '学生' || role == '企业')">
+              <a :href="form.file" target="_blank">资质文件</a>
               <el-button @click="uploadClick(1)" v-if="role == '学生'">
                 上传简历
               </el-button>
@@ -113,7 +114,7 @@
                 style="width: 400px;"
               ></el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item v-if="type != 'view'">
               <el-button type="primary" @click="on_submit_form" :loading="on_submit_loading">确定</el-button>
               <el-button @click="$router.back()">取消</el-button>
             </el-form-item>
@@ -190,6 +191,10 @@ export default {
   computed: {
     role(){
       return this.$store.state.user_info.user.role;
+    },
+    type(){
+      console.log(this.$route.query)
+      return this.$route.query.type;
     }
   },
   created() {
@@ -206,10 +211,12 @@ export default {
         .then(({ data }) => {
           this.form = data;
           data.isadmin = true
-          this.set_user_info({
+          if(this.type != 'view'){
+            this.set_user_info({
               user: data,
               login: true,
             });
+          }
           this.form.checkPass = this.form.pw;
           this.load_data = false;
         }).catch(err => {
@@ -255,7 +262,9 @@ export default {
       };
       this.axios.post('/api/upload',formdata,config).then(({data}) => {
         console.log('aaa')
-        this.form.resume = {path: data.path,name: data.name};
+        if(role == '学生') this.form.resume = {path: data.path,name: data.name};
+        if(role == '企业') this.form.file = data.path;
+        
       })
     },
     uploadClick(type){
