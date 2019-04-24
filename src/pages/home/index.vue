@@ -53,11 +53,12 @@
             <i class="fa fa-refresh"></i>
           </el-button>
         </div>
-        <div v-for="item in newsList" class="text item" style="font-size: 16px;cursor: pointer">
-          <router-link :to="{name: 'newsDetail', params: {news_id:item.news_id}}" tag="span">
-            {{item.newstitle }}
-          </router-link>
-          <i class="fa fa-fire" aria-hidden="true" v-if="item.hot" style="color:darkred;float: right;"></i>
+        <div v-for="(item,key) in newsList" :key="key" v-if="key<=3" class="text item" style="font-size: 16px;cursor: pointer">
+          <a :href="item.path">
+            {{item.name }}
+          </a>
+          <span style="font-weight: 500; color: dimgrey;font-size: 12px;" >{{item.meta.createAt}}</span>
+          <i class="fa fa-fire" aria-hidden="true"  style="color:darkred;float: right;"></i>
           <hr>
         </div>
         <bottom-tool-bar>
@@ -84,13 +85,46 @@
         <checkin ref="checkin"></checkin>
       </el-card>
       <el-card class="box-card" style="margin-top:40px;width: 36%;float: left" :body-style="{ padding: '0px' }">
-        <div slot="header" class="clearfix">
+        <!-- <div slot="header" class="clearfix">
           <i class="fa fa-map-marker fa-lg" aria-hidden="true"></i>
           <span>地图定位</span>
         </div>
         <baidu-map id="map" :center="{lng: 114.361675, lat: 30.480878}" :zoom="15" :scroll-wheel-zoom="true">
           <bm-geolocation anchor="BMAP_ANCHOR_TOP_LEFT" :showAddressBar="true" :autoLocation="true"></bm-geolocation>
-        </baidu-map>
+        </baidu-map> -->
+        <div class="chatRoom" @mouseover="showInput = true" @mouseleave="showInput = false">
+          <transition
+            name="fade"
+          >
+          <el-input
+            placeholder="in this ..."
+            v-model="msg"
+            clearable
+            style="position: fixed;margin:0 0 0 0;width:16%"
+            @keyup.native.enter="sendMessage()"
+            v-show="showInput"
+            @mouseover="showInput = true"
+            >
+          </el-input>
+          </transition>
+          <transition
+            name="fade"
+            enter-active-class="fadeInRight"
+            leave-active-class="fadeOutLeft"
+          >
+            <div >
+              <div v-for="item in msgList" :key="item.$index" class="firstLine text item"   >
+                <img :src="item.name==name? 'http://localhost:5200'+headImg.replace('/api',''):'http://localhost:5200'+item.headImg.replace('/api','')" class="user-img">
+                <div style="min-height:80px;display:block;float: left;">
+                  <span class="userName" :class="item.name==name? 'blueColor':''">{{item.name}}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{now}}</span>
+                  <div class="userMsg">
+                    {{item.msg}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
+        </div>
       </el-card>
     </div>
   </div>
@@ -100,9 +134,13 @@
   import axios from 'axios'
   import TodoList from './TodoList'
   import Checkin from 'components/sign/checkin';
+  import io from 'socket.io-client'
+
   export default{
     data(){
       return {
+        msg: '',
+        showInput: false,
         activeName:"1",
         tipcurrentPage:1,
         newscurrentPage:1,
@@ -111,7 +149,39 @@
         tiplength:4,
         newslength:7,
         newsList:[],
-        tipList:[]
+        tipList:[],
+        msgList: [
+          {
+            name: "shangshang",
+            msg: "你好",
+            headImg: "../../assets/user.jpg"
+          },
+          {
+            name: "wangwang",
+            msg: "你好a",
+            headImg: "../../assets/user.jpg"
+          },
+          {
+            name: "yangyang",
+            msg: "你好b",
+            headImg: "../../assets/user.jpg"
+          },
+          {
+            name: "shangshang",
+            msg: "你好",
+            headImg: "../../assets/user.jpg"
+          },
+          {
+            name: "wangwang",
+            msg: "你好a",
+            headImg: "../../assets/user.jpg"
+          },
+          {
+            name: "yangyang",
+            msg: "你好b",
+            headImg: "../../assets/user.jpg"
+          }
+        ],
       }
     },
     components: {
@@ -120,9 +190,29 @@
       TodoList,
       Checkin
     },
+    computed: {
+      name(){
+        return this.$store.state.user_info.user.name;
+      },
+      now(){
+        return this.formatDate(new Date(),'hh:mm:ss');
+      },
+      headImg(){
+        return this.$store.state.user_info.user.headImg;
+      }
+    },
     created(){
       this.get_tips()
       this.get_news()
+    },
+    mounted() {
+       const that = this
+        // 连接websocket地址
+        this.socket = io.connect('http://localhost:5200')
+        this.socket.on('message', function(obj) {
+          console.log(that.msgList)
+            that.msgList.unshift(obj);
+        })
     },
     methods:{
       on_refreshtips(){
@@ -150,16 +240,16 @@
       },
       get_news(){
         this.load_data = true
-        axios.get("/api/newserver",{
+        axios.get("/api/file/relative",{
           params:{
             method:"newsList",
             page: this.newscurrentPage,
             length: this.newslength
           }
         }).then((res)=>{
-          this.newsList=res.data.result
-          this.newscurrentPage=res.data.page
-          this.newstotal = res.data.total
+          this.newsList=res.data
+          this.newscurrentPage=1
+          this.newstotal = 5
           setTimeout(1000)
           this.load_data = false
         })
@@ -171,6 +261,16 @@
       handlenewsChange(val){
         this.newscurrentPage=val
         this.get_news()
+      },
+      sendMessage(){
+        let obj = {
+          name: this.name,
+          msg: this.msg,
+          headImg: this.headImg
+        };
+        // 传递消息信息
+        this.socket.emit('message', obj);
+        this.msg = ''
       }
     }
   }
@@ -249,4 +349,65 @@
     font-weight: 500;
     color:dimgrey;
   }
+  
+</style>
+<style lang="scss" scoped>
+.chatRoom {
+  position: absolute;
+  float: right;
+  width: 35%;
+  height: 41%;
+  overflow: auto;
+  display: inline-block;
+  border: 1px solid #ebeef5;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  //transform:translate(0,0);
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .firstLine:nth-child(1) {
+    padding-top: 45px !important;
+  }
+  .blueColor{
+    color: blue;
+  }
+}
+
+.user-img {
+  // background-image: url("~assets/images/background.png");
+  display: block;
+  height: 35px;
+  width: 35px;
+  background-size: contain;
+  background-position: top;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  float: left;
+  clear: both;
+}
+.userName {
+  font-size: 10px;
+  display: block;
+  height: 20px;
+  max-width: 150px;
+  padding-left: 5px;
+}
+.userMsg {
+  display: block;
+  min-height: 14px;
+  max-height: 500px;
+  max-width: 233%;
+  width: 220px;
+  overflow: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #ebeef5;
+  margin: 3px 0 0 3px;
+  padding: 5px;
+  font-size: 13px;
+  text-align: center;
+}
 </style>

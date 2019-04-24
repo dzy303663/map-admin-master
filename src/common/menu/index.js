@@ -98,19 +98,40 @@ export default {
           title: "公告管理",
           path: "/monitor/tips"
         }]
-      },{
-        title: "查看出勤情况",
-        path: "/monitor",
-        icon: "fa-align-justify",
-        child: [{
-          title: "新闻管理",
-          path: "/monitor/news"
-        }]
       }
     ],
     '系管理员': [],
     '校管理员': [],
-    '企业': [],
+    '企业': [{
+      title: "首页",
+      path: "/home",
+      icon: "fa-home"
+    }, {
+      title: "投递管理",
+      path: "/deliver",
+      icon: "fa-gears",
+      child: [{
+        title: "学生投递",
+        path: "/deliver/organization",
+        icon: "fa-table",
+      }]
+    }, {
+      title: "请假管理",
+      path: "/leave",
+      icon: "fa-align-justify",
+      child: [{
+        title: "学生请假",
+        path: "/leave/ask"
+      }]
+    },{
+      title: "岗位管理",
+      path: "/offer",
+      icon: "fa-map",
+      child: [{
+        title: "岗位管理",
+        path: "/offer/open"
+      }]
+    }],
     '开发': [{
       title: "首页",
       path: "/home",
