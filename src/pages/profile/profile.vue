@@ -262,8 +262,9 @@ export default {
       };
       this.axios.post('/api/upload',formdata,config).then(({data}) => {
         console.log('aaa')
-        if(role == '学生') this.form.resume = {path: data.path,name: data.name};
-        if(role == '企业') this.form.file = data.path;
+        
+        if(this.role == '学生') this.form.resume = {path: data.path,name: data.name};
+        if(this.role == '企业') this.form.file = data.path;
         
       })
     },

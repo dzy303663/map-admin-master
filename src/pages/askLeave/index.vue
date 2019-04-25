@@ -98,6 +98,9 @@
             <router-link :to="{name: 'askDetail', params: {id:props.row._id}}" tag="span" >
               <el-button type="primary" size="small" icon="edit">查看</el-button>
             </router-link>
+              <el-button type="primary" size="small" icon="edit">同意</el-button>
+              <el-button type="error" size="small" icon="edit">不同意</el-button>
+
             <router-link :to="{name: 'askEdit', params: {id:props.row._id}}" tag="span" v-if="role == '学生'">
               <el-button type="info" size="small" icon="edit">修改</el-button>
             </router-link>
@@ -244,8 +247,18 @@
       //获取数据
       // $fetch.api_table 等于api/index.js
       get_table_data(){
+        let api;
+        if(this.role == '学生'){
+          api = '/api/user/askfor'
+        }else if(this.role == '企业'){
+          api = '/api/user/company'
+        }else if(this.role == '企业'){
+          api = '/api/user/company'
+        }else if(this.role == '企业'){
+          api = '/api/user/company'
+        }
         this.load_data = true
-        axios.get('/api/user/askfor',{
+        axios.get(api,{
           params:{
             method:"newsList",
             page: this.currentPage,

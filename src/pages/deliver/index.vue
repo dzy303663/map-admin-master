@@ -63,7 +63,9 @@
           label="投递时间"
         >
         <template slot-scope="scope">
-          <span >{{new Date(scope.row.createdTime)}}</span>
+          <span>
+           {{scope.row.createdTime}}
+          </span>
         </template>
         </el-table-column>
         <el-table-column
@@ -201,6 +203,10 @@
         axios.get('/api/deliver',{}).then((res)=>{
           // console.log(res)
           this.table_data=res.data
+          this.table_data.map(item => {
+            console.log(item.createdTime)
+            item.createdTime = this.formatTime(item.createdTime-0)
+          })
           this.page = 1
           this.total = 5
           setTimeout(1000)

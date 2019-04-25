@@ -44,6 +44,7 @@
 <script type="text/javascript">
 import MenuList from "common/menu";
 export default {
+  props:['showName'],
   name: "slide",
   data() {
     return {
@@ -66,7 +67,6 @@ export default {
   },
   created() {
     this.nav_menu_data = MenuList[this.role];
-    console.log(this.$store.state.user_info)
   },
   methods: {
     sign(){

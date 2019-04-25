@@ -405,6 +405,8 @@ router.beforeEach((to, from, next) => {
   NProgress.done().start()
   let toName = to.name
   // let fromName = from.name
+  debugger
+  console.log(store.state)
   let is_login = store.state.user_info.login
 
   if (!is_login && toName !== 'login') {
