@@ -51,52 +51,29 @@ export default {
         path: "/home",
         icon: "fa-home"
       }, {
-        title: "实习单位选择",
-        path: "/table",
+        title: "班级信息",
+        path: "/class",
         icon: "fa-gears",
         child: [{
-          title: "企业列表",
-          path: "/table/organization",
+          title: "班级信息",
+          path: "/class/index",
           icon: "fa-table",
         }]
       }, {
-        title: "实习相关文件下载",
-        path: "/monitor",
+        title: "实习报告",
+        path: "/report",
         icon: "fa-align-justify",
         child: [{
-          title: "新闻管理",
-          path: "/monitor/news"
-        },{
-          title: "公告管理",
-          path: "/monitor/tips"
+          title: "实习报告",
+          path: "/report/index"
         }]
       },{
-        title: "请假申请1",
-        path: "/map",
+        title: "岗位管理",
+        path: "/offer",
         icon: "fa-map",
         child: [{
-          title: "热点搜索",
-          path: "/map/hot"
-        },{
-          title: "行政区划",
-          path: "/map/area"
-        },{
-          title: "地图查看",
-          path: "/map/search"
-        },{
-          title: "路线导航",
-          path: "/map/road"
-        }]
-      },{
-        title: "实习报告提交",
-        path: "/monitor",
-        icon: "fa-align-justify",
-        child: [{
-          title: "新闻管理",
-          path: "/monitor/news"
-        },{
-          title: "公告管理",
-          path: "/monitor/tips"
+          title: "岗位管理",
+          path: "/offer/index"
         }]
       }
     ],
@@ -129,7 +106,7 @@ export default {
       icon: "fa-map",
       child: [{
         title: "岗位管理",
-        path: "/offer/open"
+        path: "/offer/index"
       }]
     }],
     '开发': [{

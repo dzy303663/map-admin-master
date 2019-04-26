@@ -46,7 +46,7 @@
                 </p>
                 <p>
                   <b>岗位描述:</b>
-                  {{ item.desc }}
+                  <div v-html="item.desc"></div>
                 </p>
                 <p>
                   <b>招聘人数:</b>

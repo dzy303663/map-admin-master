@@ -224,6 +224,30 @@ const routes = [{
       auth: true
     }
   },{
+    path: '/offer/index',
+    name: 'offerList',
+    component: require('pages/offer/index'),
+    meta: {
+      title: "岗位列表",
+      auth: true
+    }
+  },{
+    path: '/offer/add',
+    name: 'offerAdd',
+    component: require('pages/offer/offerEdit'),
+    meta: {
+      title: "添加岗位",
+      auth: true
+    }
+  },{
+    path: '/class/index',
+    name: 'classList',
+    component: require('pages/class/index'),
+    meta: {
+      title: "学生列表",
+      auth: true
+    }
+  },{
     path: '/monitor/newsDetail/:news_id',
     name: 'newsDetail',
     component: NewsDetail,
@@ -405,7 +429,6 @@ router.beforeEach((to, from, next) => {
   NProgress.done().start()
   let toName = to.name
   // let fromName = from.name
-  debugger
   console.log(store.state)
   let is_login = store.state.user_info.login
 
