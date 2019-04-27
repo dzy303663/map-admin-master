@@ -59,7 +59,7 @@
         <el-table-column
           prop="people"
           label="需求人数"
-          width="300"
+          width="80"
           sortable
         >
         </el-table-column>
@@ -67,10 +67,10 @@
           label="操作"
           width="180">
           <template scope="props">
-            <router-link :to="{name: 'offerDetail', params: {id:props.row._id}}" tag="span" >
+            <router-link :to="{name: 'offerAdd', params: {id:props.row.createTime}}" tag="span" >
               <el-button type="primary" size="small" icon="edit">查看</el-button>
             </router-link>
-            <router-link :to="{name: 'offerEdit', params: {id:props.row._id}}" tag="span" v-if="role == '学生'">
+            <router-link :to="{name: 'offerAdd', params: {id:props.row.createTime}}" tag="span" v-if="role != '学生'">
               <el-button type="info" size="small" icon="edit">修改</el-button>
             </router-link>
             <!-- <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row.news_id)">删除</el-button> -->

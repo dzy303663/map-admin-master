@@ -22,8 +22,6 @@
       </div> -->
       <el-table :data="table_data" v-loading="load_data" element-loading-text="拼命加载中" border
        >
-        <el-table-column type="selection" width="55">
-        </el-table-column>
         <el-table-column label="序号" width="50">
           <template scope="scope">
             <span>{{scope.$index+(currentPage - 1) * length + 1}} </span>
@@ -45,7 +43,7 @@
             </div>
           </template>
         </el-table-column>
-         <el-table-column prop="createName" label="审批时间" width="150">
+         <el-table-column prop="createName" label="审批时间" width="100">
           <template slot-scope="scope" v-if="scope.row.optionTime">
             <div>
               {{formatTime(scope.row.optionTime-0)}}
@@ -54,9 +52,9 @@
         </el-table-column>
         <el-table-column prop="createName" label="申请人" width="80">
           <template slot-scope="scope">
-            <div>
-              {{scope.row.creator.name}}
-            </div>
+            <a @click="$router.push({ path: `/profile/${scope.row.creator.user_id}`,query: {type: 'view'} });" style="color: blue;cursor: pointer">
+              <span >{{scope.row.creator.name}}</span>
+            </a>
           </template>
         </el-table-column>
         <el-table-column prop="content" label="请假原因" width="300" sortable>
@@ -202,8 +200,8 @@ export default {
         api = '/api/user/askfor'
       } else if (this.role == '企业') {
         api = '/api/user/company'
-      } else if (this.role == '企业') {
-        api = '/api/user/company'
+      } else if (this.role == '系管理员') {
+        api = '/api/department/askfor'
       } else if (this.role == '企业') {
         api = '/api/user/company'
       }

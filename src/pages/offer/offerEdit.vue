@@ -94,7 +94,7 @@
       //获取数据
       get_form_data(){
         this.load_data = true
-        axios.get('/api/user/askFor/detail',{
+        axios.get('/api/company/open-offer/detail',{
           params:{
             id:this.route_id
           }
@@ -110,9 +110,10 @@
           if (!valid) return false
           this.on_submit_loading = true
           // this.form.createtime=new Date().Format("yyyy-MM-dd   hh:mm:ss");
-          axios.post('/api/company/open-offer/add',{
+          let url = this.route_id ? '/api/company/open-offer/update':'/api/company/open-offer/add'
+          axios.post(url,{
               ...this.form,
-              'createTime': new Date().getTime()
+              'createTime': this.form.createTime? this.form.createTime:new Date().getTime()
           })
             .then((res) => {
               this.$message.success(res.data)

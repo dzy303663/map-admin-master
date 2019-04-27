@@ -104,7 +104,7 @@
             clearable
             style="position: fixed;margin:0 0 0 0;width:16%"
             @keyup.native.enter="sendMessage()"
-            v-show="true"
+            v-show="showInput"
             @mouseover="showInput = true"
             >
           </el-input>

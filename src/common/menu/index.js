@@ -67,17 +67,38 @@ export default {
           title: "实习报告",
           path: "/report/index"
         }]
-      },{
-        title: "岗位管理",
-        path: "/offer",
-        icon: "fa-map",
-        child: [{
-          title: "岗位管理",
-          path: "/offer/index"
-        }]
       }
     ],
-    '系管理员': [],
+    '系管理员': [{
+      title: "首页",
+      path: "/home",
+      icon: "fa-home"
+    }, {
+      title: "学生管理",
+      path: "/department",
+      icon: "fa-gears",
+      child: [{
+        title: "本系学生",
+        path: "/department/index",
+        icon: "fa-table",
+      }]
+    },{
+      title: "公告管理",
+      path: "/annoncement",
+      icon: "fa-map",
+      child: [{
+        title: "公告管理",
+        path: "/annoncement/index"
+      }]
+    },{
+      title: "请假管理",
+      path: "/leave",
+      icon: "fa-align-justify",
+      child: [{
+        title: "学生请假",
+        path: "/leave/ask"
+      }]
+    }],
     '校管理员': [],
     '企业': [{
       title: "首页",

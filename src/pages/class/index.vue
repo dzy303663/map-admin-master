@@ -4,12 +4,12 @@
       <el-button @click.stop="on_refresh" size="small">
         <i class="fa fa-refresh"></i>
       </el-button>
-      <router-link :to="{name: 'offerAdd'}" tag="span">
+      <!-- <router-link :to="{name: 'offerAdd'}" tag="span">
         <el-button type="primary" icon="plus" size="small">添加数据</el-button>
-      </router-link>
+      </router-link> -->
     </panel-title>
     <div class="panel-body">
-      <div style="width: 30%;margin-bottom: 20px">
+      <!-- <div style="width: 30%;margin-bottom: 20px">
         <el-input placeholder="请输入内容" v-model="searchkey" class="input-with-select">
           <el-select v-model="searchid" slot="prepend" placeholder="请选择方式" style="width: 130px;">
             <el-option label="按作者查询" value="name"></el-option>
@@ -17,7 +17,7 @@
           </el-select>
           <el-button slot="append" @click="submit_search"><i class="fa fa-search" aria-hidden="true"></i></el-button>
         </el-input>
-      </div>
+      </div> -->
       <el-table
         :data="table_data"
         v-loading="load_data"
@@ -36,19 +36,16 @@
         <el-table-column
           prop="name"
           label="名称"
+          width="80"
         >
         </el-table-column>
         <el-table-column
-          prop="user_id"
+          prop="account"
           label="学号"
           align='center'
+          width="80"
           sortable
         >
-        <template slot-scope="scope">
-          <div v-html="scope.row.desc">
-            
-          </div>
-        </template>
         </el-table-column>
         <el-table-column
           prop="company"
@@ -66,20 +63,19 @@
         <el-table-column
           prop="register"
           label="出勤"
-          width="100"
           sortable
         >
+         <template slot-scope="scope">
+          <div>
+            <el-tag type="success" v-for="(item,key) in scope.row.register" :key="key">{{item}}</el-tag>
+          </div>
+        </template>
         </el-table-column>
         <el-table-column
           label="操作"
           width="80">
-          <template scope="props">
-            <router-link :to="{name: 'offerDetail', params: {id:props.row._id}}" tag="span" >
-              <el-button type="primary" size="small" icon="edit">查看</el-button>
-            </router-link>
-            <router-link :to="{name: 'offerEdit', params: {id:props.row._id}}" tag="span" v-if="role == '学生'">
-              <el-button type="info" size="small" icon="edit">修改</el-button>
-            </router-link>
+          <template slot-scope="scope">
+              <el-button type="primary" size="small" icon="edit" @click="$router.push({ path: `/profile/${scope.row.user_id}`,query: {type: 'view'} });">查看</el-button>
             <!-- <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row.news_id)">删除</el-button> -->
           </template>
         </el-table-column>
@@ -201,7 +197,7 @@
       // $fetch.api_table 等于api/index.js
       get_table_data(){
         this.load_data = true
-        axios.get('/api/company/open-offer',{
+        axios.get('/api/class/student',{
           params:{
             method:"newsList",
             page: this.currentPage,

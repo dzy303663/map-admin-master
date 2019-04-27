@@ -73,13 +73,6 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="status"
-          label="状态"
-          width="120"
-          sortable
-        >
-        </el-table-column>
-        <el-table-column
           label="操作"
           width="180">
           <template scope="props">
@@ -233,7 +226,13 @@
       // $fetch.api_table 等于api/index.js
       get_table_data(){
         this.load_data = true
-        axios.get('/api/user/report',{
+        let url;
+        if(this.role == '学生'){
+          url = '/api/user/report'
+        }else if(this.role == '班主任'){
+          url = '/api/user/report/teacher'
+        }
+        axios.get(url,{
           params:{
             method:"newsList",
             page: this.currentPage,

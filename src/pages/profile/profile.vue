@@ -9,11 +9,11 @@
               <img class="head_img" :src="'http://localhost:5200'+form.headImg.replace('/api','')" @click="uploadClick(2)" >
               <input type="file" ref="headImg" @change="uploadHeadImg" style="display: none;">
             </el-form-item>
-            <el-form-item label="账号:" prop="account">
+            <el-form-item label="账号:" prop="user_id">
               <el-input
                 :disabled="flag"
                 type="number"
-                v-model="form.account"
+                v-model="form.user_id"
                 placeholder="请输入ID"
                 style="width: 350px;"
               ></el-input>
