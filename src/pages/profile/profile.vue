@@ -86,16 +86,16 @@
                 style="width: 350px;"
               ></el-input>
             </el-form-item>
-            <el-form-item label="简历：" prop="resume" v-if="role == '学生' ">
-              <a v-if="form.resume" :href="form.resume.path" target="_blank">{{form.resume.name}}</a>
-              <el-button @click="uploadClick(1)" v-if="role == '学生'">
+            <el-form-item label="简历：" prop="resume" v-if="form.role == '学生' ">
+              <a v-if="form.resume" :href="form.resume.path.replace('/api','')" target="_blank">{{form.resume.name}}</a>
+              <el-button @click="uploadClick(1)" v-if="form.role == '学生'">
                 上传简历
               </el-button>
               <input type="file" ref="resume" @change="uploadResume" style="display: none;">
             </el-form-item>
-            <el-form-item label="上传资质：" prop="resume" v-if="role == '企业'">
-              <a v-if="form.file" :href="form.file" target="_blank">资质文件</a>
-              <el-button @click="uploadClick(1)" v-if="role == '企业'">
+            <el-form-item label="上传资质：" prop="resume" v-if="form.role == '企业'">
+              <a v-if="form.file" :href="form.file.replace('/api','')" target="_blank">资质文件</a>
+              <el-button @click="uploadClick(1)" v-if="form.role == '企业'">
                 上传资质文件
               </el-button>
               <input type="file" ref="resume" @change="uploadResume" style="display: none;">

@@ -9,7 +9,7 @@
               <el-input v-model="form.title" placeholder="请输入内容" style="width: 250px;"></el-input>
             </el-form-item>
             <el-form-item label="附件：">
-              <a v-if="form.resume" :href="form.resume.path" target="_blank">{{form.resume.name}}</a>
+              <a v-if="form.resume" :href="form.resume.path.replace('/api','')" target="_blank">{{form.resume.name}}</a>
               <el-button @click="uploadClick()" >上传系部文件</el-button>
               <input type="file" ref="resume" @change="uploadResume" style="display: none;">
             </el-form-item>

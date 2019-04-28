@@ -54,7 +54,7 @@
           </el-button>
         </div>
         <div v-for="(item,key) in newsList" :key="key" v-if="key<=3" class="text item" style="font-size: 16px;cursor: pointer">
-          <a :href="'/api/'+item.path" target="_blank">
+          <a :href="item.path.replace('/api','')" target="_blank">
             {{item.name }}
           </a>
           <span style="font-weight: 500; color: dimgrey;font-size: 12px;" >{{item.meta.createAt}}</span>

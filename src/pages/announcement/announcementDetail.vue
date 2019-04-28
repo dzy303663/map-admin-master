@@ -28,7 +28,7 @@
                 <span style="color:#d93a3a;margin-left: 80px" >
                   文件:
                   &nbsp;
-                  <a :href="this.form.resume.path">{{this.form.resume.name}}</a>
+                  <a :href="this.form.resume.path.replace('/api','')">{{this.form.resume.name}}</a>
                 </span>
               </div>
             </div>

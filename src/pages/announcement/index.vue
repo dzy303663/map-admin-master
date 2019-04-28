@@ -67,7 +67,7 @@
           sortable
         >
           <template slot-scope="scope">
-           <a :href="scope.row.resume.path">
+           <a :href="scope.row.resume.path.replace('/api','')">
              <el-tag>
                {{scope.row.resume.name}}
              </el-tag>

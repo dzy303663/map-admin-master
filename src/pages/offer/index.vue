@@ -55,6 +55,10 @@
           label="创建时间"
           width="150"
         >
+        <template slot-scope="scope">
+          <div>
+            {{formatTime(scope.row.createTime)}}
+          </div>
         </el-table-column>
         <el-table-column
           prop="people"
