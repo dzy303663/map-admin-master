@@ -5,10 +5,10 @@
         <img src="./images/logo.svg" alt="AdminX">
       </router-link>
       <div>
-        <img class="head_img" :src="'http://localhost:5200'+headImg.replace('/api','')" alt="请先完善头像">
+        <img class="head_img" :src="headImg.replace('/api','')" alt="请先完善头像">
         <div class="head_title">
           <p>{{name}}</p>
-          <p><i v-if="position" class="el-icon-location" style="color: green;margin-right:5px;cursor: pointer;" @click="sign()"></i>在线</p>
+          <p><i v-if="role == '学生'" class="el-icon-location" style="color: green;margin-right:5px;cursor: pointer;" @click="sign()"></i>在线</p>
         </div>
       </div>
       <el-menu class="menu-box" theme="dark" router :default-active="$route.path">

@@ -88,7 +88,7 @@ export default {
       icon: "fa-map",
       child: [{
         title: "公告管理",
-        path: "/annoncement/index"
+        path: "/announcement/index"
       }]
     },{
       title: "请假管理",

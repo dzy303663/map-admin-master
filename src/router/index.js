@@ -42,6 +42,7 @@ import TipsDetail from 'pages/monitor/tipsDetail'
 import NewsEdit from 'pages/monitor/NewsEdit'
 import TipsEdit from 'pages/monitor/tipsEdit'
 
+import {cookieStorage} from 'common/storage'
 
 Vue.use(VueRouter)
 
@@ -214,6 +215,38 @@ const routes = [{
       title: "报告详情",
       auth: true
     }
+  },{
+    path: '/announcement/index',
+    name: 'askList',
+    component: require('pages/announcement/index'),
+    meta: {
+      title: "报告列表",
+      auth: true
+    }
+  },{
+    path: '/announcement/add',
+    name: 'announcementAdd',
+    component: require('pages/announcement/announcementEdit'),
+    meta: {
+      title: "实习报告",
+      auth: true
+    }
+  },{
+    path: '/announcement/edit/:id',
+    name: 'announcementEdit',
+    component: require('pages/announcement/announcementEdit'),
+    meta: {
+      title: "实习报告",
+      auth: true
+    }
+  },{
+    path: '/announcement/datail/:id',
+    name: 'announcementDetail',
+    component: require('pages/announcement/announcementDetail'),
+    meta: {
+      title: "报告详情",
+      auth: true
+    }
   },
   {
     path: '/deliver/index',
@@ -245,6 +278,14 @@ const routes = [{
     component: require('pages/class/index'),
     meta: {
       title: "学生列表",
+      auth: true
+    }
+  },{
+    path: '/department/index',
+    name: 'departmentList',
+    component: require('pages/class/index'),
+    meta: {
+      title: "本系学生",
       auth: true
     }
   },{
@@ -431,8 +472,8 @@ router.beforeEach((to, from, next) => {
   // let fromName = from.name
   console.log(store.state)
   let is_login = store.state.user_info.login
-
-  if (!is_login && toName !== 'login') {
+  let is_cookies = cookieStorage.get('user_id')
+  if (!is_login && toName !== 'login' && is_cookies) {
     next({
       name: 'login'
     })

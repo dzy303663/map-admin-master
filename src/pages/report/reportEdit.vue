@@ -90,7 +90,7 @@
       //获取数据
       get_form_data(){
         this.load_data = true
-        axios.get('/api/user/askFor/detail',{
+        axios.get('/api/user/report/detail',{
           params:{
             id:this.route_id
           }
@@ -106,7 +106,8 @@
           if (!valid) return false
           this.on_submit_loading = true
           // this.form.createtime=new Date().Format("yyyy-MM-dd   hh:mm:ss");
-          axios.post('/api/user/report/add',{
+          let url = this.route_id ? '/api/user/report/update':'/api/user/report/add'
+          axios.post(url,{
               ...this.form,
               'creator': this.get_user_info.user
           })

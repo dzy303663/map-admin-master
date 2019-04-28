@@ -10,23 +10,23 @@
             <i class="fa fa-refresh"></i>
           </el-button>
         </div>
-        <div class="post" v-for="item in tipList">
+        <div class="post" v-for="(item,key) in tipList" :key="key">
           <el-button class="btn upvote" type="primary" plain >
             <i class="fa fa-arrow-up" aria-hidden="true"></i>
           </el-button>
           <div class="postcontent">
             <h3>
-              <router-link :to="{name: 'tipsDetail', params: {inform_id:item.inform_id}}" tag="a">
-                {{item.infotitle}}
+              <router-link :to="{name: 'announcementDetail', params: {id:item._id}}" tag="a">
+                {{item.title}}
               </router-link>
             </h3>
             <hr>
             <p>
               <span class="author">
-                {{item.infoname}}
+                {{item.creator.name}}
               </span>
               <span style="float: right">
-                {{item.infotime}}
+                {{item.meta.createAt}}
               </span>
             </p>
           </div>
@@ -116,7 +116,7 @@
           >
             <div >
               <div v-for="item in msgList" :key="item.$index" class="firstLine text item"   >
-                <img :src="item.name==name? 'http://localhost:5200'+headImg.replace('/api',''):'http://localhost:5200'+item.headImg.replace('/api','')" class="user-img">
+                <img :src="item.name==name? headImg.replace('/api',''):item.headImg.replace('/api','')" class="user-img">
                 <div style="min-height:80px;display:block;float: left;">
                   <span class="userName" :class="item.name==name? 'blueColor':''">{{item.name}}&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{now}}</span>
                   <div class="userMsg">
@@ -230,7 +230,7 @@
       },
       get_tips(){
         this.load_data = true
-        axios.get("/api/infoserver",{
+        axios.get("/api/department/announcement",{
           params:{
             method:"infoList",
             page: this.tipcurrentPage,
@@ -238,9 +238,9 @@
           }
         }).then((res)=>{
           // console.log(res)
-          this.tipList=res.data.result
-          this.tipcurrentPage=res.data.page
-          this.tiptotal = res.data.total
+          this.tipList=res.data
+          this.tipcurrentPage=1
+          this.tiptotal = 4
           setTimeout(1000)
           this.load_data = false
         })
