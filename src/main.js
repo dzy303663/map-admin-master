@@ -7,6 +7,12 @@ import 'font-awesome/scss/font-awesome.scss'
 import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+
+import 'echarts'
+
+// import 'echarts/lib/component/dataZoom';
+
+import ECharts from 'vue-echarts/components/ECharts.vue'
 //导入组件
 import router from './router'
 //导入状态管理器
@@ -40,6 +46,8 @@ Vue.use(ElementUI)
 
 //使用自定义插件
 Vue.use(Plugins)
+
+Vue.component('chart', ECharts)
 
 //使用api
 Vue.use(api)

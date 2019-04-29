@@ -20,6 +20,7 @@
     "socket.io-client": "^2.2.0",
     "vue": "^2.3.0",
     "vue-baidu-map": "^0.21.11",
+    "vue-echarts": "^4.0.2",
     "vue-quill-editor": "^3.0.6",
     "vue-router": "^2.5.2",
     "vue-socket.io": "^3.0.7",

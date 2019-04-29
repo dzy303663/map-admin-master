@@ -77,6 +77,9 @@
             </router-link>
             <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row.news_id)">删除</el-button> -->
             <a :href="scope.row.path"><el-button type="primary">下载</el-button></a>
+            <el-button type="primary" @click="handleDel(scope.row._id)">删除</el-button>
+
+
           </template>
         </el-table-column>
       </el-table>
@@ -314,6 +317,12 @@
           })
           .catch(() => {
           })
+      },
+      handleDel(_id){
+        this.axios.delete('/api/file/del',{data:{_id}}).then(res => {
+          this.$message.success('删除成功');
+          this.get_table_data();
+        })
       }
     }
   }

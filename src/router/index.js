@@ -289,6 +289,14 @@ const routes = [{
       auth: true
     }
   },{
+    path: '/system',
+    name: 'system',
+    component: require('pages/system/index'),
+    meta: {
+      title: "系统展览",
+      auth: true
+    }
+  },{
     path: '/monitor/newsDetail/:news_id',
     name: 'newsDetail',
     component: NewsDetail,
@@ -346,6 +354,7 @@ const routes = [{
         auth: true
       }
     },
+    
     {
     path: '/table/update/:personid',
     name: 'tableUpdate',

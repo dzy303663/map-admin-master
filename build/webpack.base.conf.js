@@ -2,7 +2,7 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
-var webpack=require('webpack')
+var webpack = require('webpack')
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -15,9 +15,9 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: process.env.NODE_ENV === 'production' ?
+      config.build.assetsPublicPath :
+      config.dev.assetsPublicPath
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('common.js'),
@@ -41,8 +41,7 @@ module.exports = {
     }
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/i,
         loader: 'vue-loader',
         options: vueLoaderConfig
@@ -50,7 +49,12 @@ module.exports = {
       {
         test: /\.js$/i,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')],
+        include: [
+          resolve('src'),
+          resolve('test'),
+          resolve('node_modules/vue-echarts'),
+          resolve('node_modules/resize-detector')
+        ],
         exclude: resolve('node_modules')
       },
       {

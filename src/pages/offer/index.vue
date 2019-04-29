@@ -59,6 +59,7 @@
           <div>
             {{formatTime(scope.row.createTime)}}
           </div>
+        </template>
         </el-table-column>
         <el-table-column
           prop="people"
