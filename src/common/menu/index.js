@@ -36,15 +36,7 @@ export default {
       title: "实习报告",
       path: "/report/index"
     }]
-  }, {
-    title: "查看出勤情况",
-    path: "/monitor",
-    icon: "fa-align-justify",
-    child: [{
-      title: "新闻管理",
-      path: "/monitor/news"
-    }]
-  }],
+  },],
   '班主任': [{
     title: "首页",
     path: "/home",
