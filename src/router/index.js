@@ -30,11 +30,6 @@ import SaveDept from 'pages/table/saveDept'
 import SaveJob from 'pages/table/saveJob'
 import SaveOrgan from 'pages/table/saveOrgan'
 
-import mapRoad from 'pages/map/road'
-import mapHot from 'pages/map/hot'
-import mapArea from 'pages/map/area'
-import mapSearch from 'pages/map/search'
-
 import News from 'pages/monitor/news'
 import Tips from 'pages/monitor/tips'
 import NewsDetail from 'pages/monitor/newsDetail'
@@ -135,15 +130,7 @@ const routes = [{
       title: "新闻管理",
       auth: true
     }
-  },/*  {
-    path: '/leave/ask',
-    name: 'leave',
-    component: News,
-    meta: {
-      title: "申请列表",
-      auth: true
-    }
-  } */,{
+  },{
     path: '/files/list',
     name: 'files',
     component: require('pages/relativeFile/index'),
@@ -426,39 +413,7 @@ const routes = [{
         auth: true
       }
     },
-    {
-    path :'/map/road',
-    name:'mapRoad',
-    component:mapRoad,
-    meta:{
-      title:"路线导航",
-      auth:true
-    }
-  },{
-    path:'/map/hot',
-    name:'mapHot',
-    component:mapHot,
-    meta:{
-      title:"热点搜索",
-      auth:true
-    }
-  },{
-    path:'/map/area',
-    name:'mapArea',
-    component:mapArea,
-    meta:{
-      title:"行政区划",
-      auth:true
-    }
-  },{
-    path:'map/search',
-    name:"mapSearch",
-    component:mapSearch,
-    meta:{
-      title:"地图查看",
-      auth:true
-    }
-  }]
+    ]
 }]
 
 const router = new VueRouter({
