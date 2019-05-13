@@ -40,6 +40,15 @@ export default {
       icon: "fa-table",
     }]
   },
+  {
+    title: "查看资讯",
+    path: "/report",
+    icon: "fa-align-justify",
+    child: [{
+      title: "资讯",
+      path: "/report/index"
+    }]
+  }
   ],
   '校管理员': [{
       title: "首页",

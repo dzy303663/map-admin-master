@@ -99,9 +99,7 @@
             </router-link>
               <el-button type="danger" size="small" v-if="role != '用户'"  @click="handleDelClick(props.row._id)">删除</el-button>
               <el-button type="primary" size="small" v-if="role == '用户'"  @click="handleFeedbackClick(props.row._id)">反馈</el-button>
-              <el-button type="primary" size="small" v-if="role == '用户'"  @click="handleReportClick(props.row.user_id)">举报</el-button>
-
-            
+              <el-button type="danger" size="small" v-if="role == '用户'"  @click="handleReportClick(props.row.user_id)">举报</el-button>
             <!-- <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row.news_id)">删除</el-button> -->
           </template>
         </el-table-column>
@@ -246,7 +244,7 @@
       // $fetch.api_table 等于api/index.js
       get_table_data(){
         this.load_data = true
-        let url = this.role == '用户'? '/api/news':'/api/user/news'
+        let url = this.role == '用户'||this.role == '管理员'? '/api/news':'/api/user/news'
         axios.get(url,{
           params:{
             method:"newsList",
