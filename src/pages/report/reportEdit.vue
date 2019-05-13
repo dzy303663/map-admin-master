@@ -10,7 +10,11 @@
             <el-form-item label="标题:" prop="title">
               <el-input v-model="form.title" placeholder="请输入内容" style="width: 250px;"></el-input>
             </el-form-item>
-            <el-form-item label="报告内容:" prop="content">
+             <el-form-item label="封面:" prop="img">
+              <img class="head_img" :src="'http://localhost:80'+form.img.replace('/api','')" @click="uploadClick(2)" >
+              <input type="file" ref="headImg" @change="uploadHeadImg" style="display: none;">
+            </el-form-item>
+            <el-form-item label="资讯内容:" prop="content">
               <quill-editor
                 id="QE"
                 v-model="form.content"
@@ -66,6 +70,7 @@
         form: {
           content:null,
           title: null,
+          img: ''
         },
         route_id: this.$route.params.id,
         load_data: false,
@@ -90,7 +95,7 @@
       //获取数据
       get_form_data(){
         this.load_data = true
-        axios.get('/api/user/report/detail',{
+        axios.get('/api/user/news/detail',{
           params:{
             id:this.route_id
           }
@@ -106,10 +111,11 @@
           if (!valid) return false
           this.on_submit_loading = true
           // this.form.createtime=new Date().Format("yyyy-MM-dd   hh:mm:ss");
-          let url = this.route_id ? '/api/user/report/update':'/api/user/report/add'
+          let url = this.route_id ? '/api/user/news/update':'/api/user/news/add'
           axios.post(url,{
               ...this.form,
-              'creator': this.get_user_info.user
+              'creator': this.get_user_info.user,
+
           })
             .then((res) => {
               this.$message.success(res.data)
@@ -131,6 +137,26 @@
       },
       handleDatePick(val){
         console.log(val)
+      },
+      uploadClick(type){
+        switch(type){
+          case 1: this.$refs.resume.click();break;
+          case 2: this.$refs.headImg.click();break;
+        }
+      },
+      uploadHeadImg(e){
+        var file = e.target.files[0];
+        var formdata = new FormData();
+        console.log(e.target.files)
+        formdata.append("file", file, file.name)
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'  //以表单传数据的格式来传递fromdata
+          }
+        };
+        this.axios.post('/api/upload',formdata,config).then(({data}) => {
+          this.form.img = data.path
+        })
       }
     },
     components: {
@@ -138,10 +164,16 @@
     }
   }
 </script>
-<style>
+<style scoped>
   #QE{
     width:1300px;
     height: 400px;
     margin-bottom: 60px ;
+  }
+  .head_img{
+    width: 300px;
+    
+    /* border-radius: 50%; */
+    cursor: pointer;
   }
 </style>

@@ -1,42 +1,13 @@
 export default {
-  '学生': [{
-    title: "首页",
-    path: "/home",
-    icon: "fa-home"
-  }, {
-    title: "实习单位选择",
-    path: "/table",
-    icon: "fa-gears",
-    child: [{
-      title: "企业列表",
-      path: "/table/organization",
-      icon: "fa-table",
-    }]
-  }, {
-    title: "实习相关文件下载",
-    path: "/files",
-    icon: "fa-align-justify",
-    child: [{
-      title: "相关文件",
-      path: "/files/list"
-    }]
-  }, {
-    title: "请假申请",
-    path: "/leave",
-    icon: "fa-map",
-    child: [{
-      title: "申请列表",
-      path: "/leave/ask"
-    }]
-  }, {
-    title: "实习报告提交",
+  '发布人': [ {
+    title: "资讯管理",
     path: "/report",
     icon: "fa-align-justify",
     child: [{
-      title: "实习报告",
+      title: "资讯",
       path: "/report/index"
     }]
-  },],
+  }],
   '班主任': [{
     title: "首页",
     path: "/home",
@@ -59,11 +30,7 @@ export default {
       path: "/report/index"
     }]
   }],
-  '管理员': [{
-    title: "首页",
-    path: "/home",
-    icon: "fa-home"
-  }, {
+  '管理员': [ {
     title: "用户管理",
     path: "/department",
     icon: "fa-gears",
@@ -73,10 +40,7 @@ export default {
       icon: "fa-table",
     }]
   },
-  {
-    title: "新闻管理",
-    path: "/monitor/news"
-  }],
+  ],
   '校管理员': [{
       title: "首页",
       path: "/home",
@@ -96,34 +60,13 @@ export default {
       icon: "fa-align-justify",
     }
   ],
-  '企业': [{
-    title: "首页",
-    path: "/home",
-    icon: "fa-home"
-  }, {
-    title: "投递管理",
-    path: "/deliver",
-    icon: "fa-gears",
-    child: [{
-      title: "学生投递",
-      path: "/deliver/index",
-      icon: "fa-table",
-    }]
-  }, {
-    title: "请假管理",
-    path: "/leave",
+  '用户': [{
+    title: "查看资讯",
+    path: "/report",
     icon: "fa-align-justify",
     child: [{
-      title: "学生请假",
-      path: "/leave/ask"
-    }]
-  }, {
-    title: "岗位管理",
-    path: "/offer",
-    icon: "fa-map",
-    child: [{
-      title: "岗位管理",
-      path: "/offer/index"
+      title: "资讯",
+      path: "/report/index"
     }]
   }],
   '开发': [{

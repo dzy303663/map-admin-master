@@ -18,7 +18,7 @@
         <el-table-column prop="user_id" label="账号" align="center" sortable></el-table-column>
         <el-table-column prop="role" label="角色" sortable></el-table-column>
         <el-table-column prop="tel" label="联系电话" sortable></el-table-column>
-        <el-table-column label="操作" width="80">
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
               type="primary"
@@ -39,22 +39,28 @@
       <bottom-tool-bar></bottom-tool-bar>
     </div>
     <el-dialog title="请选择您要申请的岗位" :visible.sync="dialogVisible" width="50%" center>
-      <span>
-        <b>角色:</b>
-      </span>
-      <el-select v-model="currentSelectedRole" placeholder="请选择">
-        <el-option value="管理员"></el-option>
-        <el-option value="发布人"></el-option>
-        <el-option value="用户"></el-option>
-      </el-select>
-      <span>
-        <b>账号:</b>
-      </span>
-      <el-input type="number" placeholder="请输入内容" v-model="currentInputId" style="width: 200px;"></el-input>
-      <span>
-        <b>密码:</b>
-      </span>
-      <el-input placeholder="请输入内容" v-model="currentInputPw" style="width: 200px;"></el-input>
+      <el-row>
+        <span>
+          <b>角色:</b>
+        </span>
+        <el-select v-model="currentSelectedRole" placeholder="请选择">
+          <el-option value="管理员"></el-option>
+          <el-option value="发布人"></el-option>
+          <el-option value="用户"></el-option>
+        </el-select>
+      </el-row>
+      <el-row style="margin: 20px 0;">
+        <span>
+          <b>账号:</b>
+        </span>
+        <el-input type="number" placeholder="请输入内容" v-model="currentInputId" style="width: 200px;"></el-input>
+      </el-row>
+      <el-row>
+        <span>
+          <b>密码:</b>
+        </span>
+        <el-input placeholder="请输入内容" v-model="currentInputPw" style="width: 200px;"></el-input>
+      </el-row>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false;this.currentSelected = ''">取 消</el-button>
         <el-button type="primary" @click="handleSubmit()">确 定</el-button>
@@ -215,7 +221,7 @@ export default {
       });
     },
     handleDelClick(_id) {
-      this.axios.delete("/api/user/del", {data:{_id}}).then(({ data }) => {
+      this.axios.delete("/api/user/del", { data: { _id } }).then(({ data }) => {
         this.$message.success(data);
         this.get_table_data();
       });

@@ -26,8 +26,12 @@
                   {{this.form.title}}
                 </span>
               </div>
+              
             </div>
           </div>
+          <div>
+                <img class="head_img" :src="'http://localhost:80'+form.img.replace('/api','')">
+              </div>
           <div style="clear:both"></div>
           <div style="line-height: 30px;font-size: 17px;font-family: 'Microsoft YaHei'; border-bottom: 1px solid rgba(100,100,100,.2);padding-bottom: 40px">
             <div v-html="this.form.content" class="ql-editor"></div>
@@ -74,7 +78,7 @@
       //获取数据
      get_form_data(){
         this.load_data = true
-        axios.get('/api/user/report/detail',{
+        axios.get('/api/user/news/detail',{
           params:{
             id:this.route_id
           }
@@ -91,5 +95,11 @@
     }
   }
 </script>
-<style>
+<style scoped>
+.head_img{
+    width: 300px;
+    
+    /* border-radius: 50%; */
+    /* cursor: pointer; */
+  }
 </style>

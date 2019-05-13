@@ -9,7 +9,7 @@
       </router-link>
     </panel-title>
     <div class="panel-body">
-      <div style="width: 30%;margin-bottom: 20px">
+     <!--  <div style="width: 30%;margin-bottom: 20px">
         <el-input placeholder="请输入内容" v-model="searchkey" class="input-with-select">
           <el-select v-model="searchid" slot="prepend" placeholder="请选择方式" style="width: 130px;">
             <el-option label="按作者查询" value="name"></el-option>
@@ -17,17 +17,13 @@
           </el-select>
           <el-button slot="append" @click="submit_search"><i class="fa fa-search" aria-hidden="true"></i></el-button>
         </el-input>
-      </div>
+      </div> -->
       <el-table
         :data="table_data"
         v-loading="load_data"
         element-loading-text="拼命加载中"
         border
         @selection-change="on_batch_select">
-        <el-table-column
-          type="selection"
-          width="55">
-        </el-table-column>
         <el-table-column
           label="序号"
           width="80">
@@ -52,12 +48,23 @@
         </el-table-column>
         <el-table-column
           prop="createName"
-          label="提交人"
-          width="150"
+          label="创建人"
+          width="80"
         >
          <template slot-scope="scope" >
             <div>
               {{scope.row.creator.name}}
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="img"
+          label="封面"
+          width="150"
+        >
+         <template slot-scope="scope" >
+            <div>
+              <img width="140" :src="'http://localhost:80'+scope.row.img.replace('/api','')" alt="">
             </div>
           </template>
         </el-table-column>
@@ -73,20 +80,33 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="view"
+          label="浏览量"
+          width="50"
+          align='center'          
+        >
+        </el-table-column>
+        <el-table-column
           label="操作"
-          width="180">
+          align='center'          
+          >
           <template scope="props">
             <router-link :to="{name: 'reportDetail', params: {id:props.row._id}}" tag="span" >
               <el-button type="primary" size="small" icon="edit">查看</el-button>
             </router-link>
-            <router-link :to="{name: 'reportEdit', params: {id:props.row._id}}" tag="span" v-if="role == '学生'">
-              <el-button type="info" size="small" icon="edit">修改</el-button>
+            <router-link :to="{name: 'reportEdit', params: {id:props.row._id}}" tag="span" >
+              <el-button v-if="role != '用户'" type="info" size="small" icon="edit">修改</el-button>
             </router-link>
+              <el-button type="danger" size="small" v-if="role != '用户'"  @click="handleDelClick(props.row._id)">删除</el-button>
+              <el-button type="primary" size="small" v-if="role == '用户'"  @click="handleFeedbackClick(props.row._id)">反馈</el-button>
+              <el-button type="primary" size="small" v-if="role == '用户'"  @click="handleReportClick(props.row.user_id)">举报</el-button>
+
+            
             <!-- <el-button type="danger" size="small" icon="delete" @click="delete_data(props.row.news_id)">删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
-      <bottom-tool-bar>
+      <!-- <bottom-tool-bar>
         <el-button
           type="danger"
           icon="delete"
@@ -110,7 +130,7 @@
             :total="total">
           </el-pagination>
         </div>
-      </bottom-tool-bar>
+      </bottom-tool-bar> -->
     </div>
   </div>
 </template>
@@ -226,12 +246,7 @@
       // $fetch.api_table 等于api/index.js
       get_table_data(){
         this.load_data = true
-        let url;
-        if(this.role == '学生'){
-          url = '/api/user/report'
-        }else if(this.role == '班主任'){
-          url = '/api/user/report/teacher'
-        }
+        let url = this.role == '用户'? '/api/news':'/api/user/news'
         axios.get(url,{
           params:{
             method:"newsList",
@@ -335,6 +350,18 @@
           })
           .catch(() => {
           })
+      },
+      handleDelClick(_id) {
+        this.axios.delete("/api/news/del", { data: { _id } }).then(({ data }) => {
+          this.$message.success(data);
+          this.get_table_data();
+        });
+      },
+      handleFeedbackClick(){
+
+      },
+      handleReportClick(){
+
       }
     }
   }

@@ -100,15 +100,15 @@
               </el-button>
               <input type="file" ref="resume" @change="uploadResume" style="display: none;">
             </el-form-item>
-            <el-form-item label="自我介绍：" prop="introduce">
+            <!-- <el-form-item label="自我介绍：" prop="introduce">
               <el-input
                 type="textarea"
                 placeholder="请输入内容"
                 v-model="form.introduce"
                 style="width: 400px;"
               ></el-input>
-            </el-form-item>
-            <el-form-item v-if="type != 'view'">
+            </el-form-item> -->
+            <el-form-item v-if="type != 'view' || role =='管理员'">
               <el-button type="primary" @click="on_submit_form" :loading="on_submit_loading">确定</el-button>
               <el-button @click="$router.back()">取消</el-button>
             </el-form-item>
